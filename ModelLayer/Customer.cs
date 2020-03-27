@@ -35,5 +35,8 @@ namespace ModelLayer {
             this.password = password;
             this.username = username;
         }
+
+        public Customer() {
+        }
     }
 }

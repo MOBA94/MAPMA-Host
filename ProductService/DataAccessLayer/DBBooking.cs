@@ -8,7 +8,7 @@ using System.Data.SqlClient;
 //tjekker om jeg kan pull det her
 namespace ProductService.DataAccessLayer
 {
-    class DBBooking : ICRUD<Booking>
+    class DBBooking : IBOOKING<Booking>
     {
 
         private string _connectionString;
@@ -21,12 +21,12 @@ namespace ProductService.DataAccessLayer
                 using (SqlCommand cmdInsertBook = connection.CreateCommand())
                 {
                     cmdInsertBook.CommandText = "INSERT INTO Booking(EscapeRoomID, BookingTime, BDate, AmountOfPeople, UserName, EmployeeID) VALUES(@EscapeRoomID, @BookingTime, @BDate, @AmountOfPeople, @UserName, @EmployeeID)";
-                    cmdInsertBook.Parameters.AddWithValue("EscapeRoomID", book.er.ID);
+                    cmdInsertBook.Parameters.AddWithValue("EscapeRoomID", book.er.escapeRoomID);
                     cmdInsertBook.Parameters.AddWithValue("BookingTime", book.bookingTime);
                     cmdInsertBook.Parameters.AddWithValue("BDate", book.date);
                     cmdInsertBook.Parameters.AddWithValue("AmountOfPeople", book.amountOfPeople);
-                    cmdInsertBook.Parameters.AddWithValue("UserName", book.cus.UserName);
-                    cmdInsertBook.Parameters.AddWithValue("EmployeeID", book.emp.ID);
+                    cmdInsertBook.Parameters.AddWithValue("UserName", book.cus.username);
+                    cmdInsertBook.Parameters.AddWithValue("EmployeeID", book.emp.employeeID);
                     cmdInsertBook.ExecuteNonQuery();
                 }
             }
@@ -36,17 +36,17 @@ namespace ProductService.DataAccessLayer
             throw new NotImplementedException();
         }
 
-        public T Get(int id)
+        public Booking Get(int id)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<T> GetAll()
+        public IEnumerable<Booking> GetAll()
         {
             throw new NotImplementedException();
         }
 
-        public void Update(T entity)
+        public void Update(Booking entity)
         {
             throw new NotImplementedException();
         }
