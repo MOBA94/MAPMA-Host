@@ -8,7 +8,7 @@ using System.Data.SqlClient;
 
 namespace ProductService.DataAccessLayer
 {
-    class DBBooking : ICRUD<T>
+    class DBBooking : ICRUD<Booking>
     {
 
         private string _connectionString;
