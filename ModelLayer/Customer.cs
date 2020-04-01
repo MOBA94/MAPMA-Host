@@ -8,7 +8,7 @@ using System.Runtime.Serialization;
 namespace ModelLayer {
 
     [DataContract]
-   public class Customer : Person {
+   public class Customer : Person { 
 
         [DataMember]
         public int customerNo {
