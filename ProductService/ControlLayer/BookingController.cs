@@ -8,8 +8,16 @@ using ProductService.DataAccessLayer;
 
 namespace ProductService.ControlLayer {
     class BookingController : ICRUD<Booking> {
+        private CustomerController CusCon;
+        private EscapeRoomController ERCon;
+        private IBOOKING dbBook;
 
-        private DBBooking dbBook;
+        public BookingController() {
+            CusCon = new CustomerController();
+            ERCon = new EscapeRoomController();
+            dbBook = new IBOOKING();
+        }
+
         public void Create(Booking book) {
             dbBook.Create(book);
         }

@@ -60,6 +60,10 @@ namespace ModelLayer {
             this.description = description;
             checkList = new List<string>();
         }
+
+        public EscapeRoom() {
+        }
+
         public void AddToList(string item) {
             checkList.Add(item);
         }

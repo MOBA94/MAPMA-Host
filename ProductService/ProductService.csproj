@@ -57,16 +57,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ControlLayer\BookingController.cs" />
+    <Compile Include="ControlLayer\EscapeRoomController.cs" />
     <Compile Include="ControlLayer\ICRUD.cs" />
     <Compile Include="ControlLayer\ProductController.cs" />
     <Compile Include="ControlLayer\CustomerController.cs" />
     <Compile Include="DataAccessLayer\DB.cs" />
     <Compile Include="DataAccessLayer\DBBooking.cs" />
     <Compile Include="DataAccessLayer\DBCustomer.cs" />
+    <Compile Include="DataAccessLayer\DBEscapeRoom.cs" />
     <Compile Include="DataAccessLayer\DbProduct.cs" />
     <Compile Include="DataAccessLayer\IBOOKING.cs" />
     <Compile Include="DataAccessLayer\ICRUD.cs" />
     <Compile Include="DataAccessLayer\ICUSTOMER.cs" />
+    <Compile Include="DataAccessLayer\IEMPLOYEE.cs" />
+    <Compile Include="DataAccessLayer\IESCAPEROOM.cs" />
     <Compile Include="IProductService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ProductService.cs" />
@@ -80,7 +84,6 @@
       <Name>ModelLayer</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <VSToolsPath Condition="'$(VSToolsPath)' == '' and '$(VisualStudioVersion)' != '' and '$(VisualStudioVersion)' != '11.0'">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
