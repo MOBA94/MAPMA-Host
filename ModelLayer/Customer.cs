@@ -24,5 +24,19 @@ namespace ModelLayer {
         public string username {
             get; set;
         }
+
+        public Customer(int customerNo, string password, string username, string FirstName, string LastName, string Mail, string Phone): base (FirstName, LastName, Mail, Phone) {
+            this.customerNo = customerNo;
+            this.password = password;
+            this.username = username;
+        }
+
+        public Customer(string password, string username, string FirstName, string LastName, string Mail, string Phone) : base(FirstName, LastName, Mail, Phone) {
+            this.password = password;
+            this.username = username;
+        }
+
+        public Customer() {
+        }
     }
 }
