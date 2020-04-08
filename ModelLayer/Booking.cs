@@ -16,11 +16,6 @@ namespace ModelLayer
             get; set;
         }
         [DataMember]
-        public string cusName
-        {
-            get; set;
-        }
-        [DataMember]
         public DateTime date { get; set; }
         [DataMember]
         public DateTime bookingTime { get; set; }
@@ -55,6 +50,10 @@ namespace ModelLayer
             this.bookingTime = bookingTime;
             this.emp = emp;
             this.er = er;
+        }
+
+        public Booking() {
+        
         }
     }
 }

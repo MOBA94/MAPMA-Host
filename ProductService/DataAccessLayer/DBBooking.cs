@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ModelLayer;
 using System.Data.SqlClient;
-//tjekker om jeg kan pull det her
+
 namespace ProductService.DataAccessLayer
 {
     class DBBooking : IBOOKING<Booking>

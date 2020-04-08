@@ -8,7 +8,7 @@ using ProductService.DataAccessLayer;
 
 namespace ProductService.DataAccessLayer {
     class CustomerController {
-        private DBCustomer DBcus;
+        private ICUSTOMER<Customer> DBcus;
 
         public CustomerController () {
             DBcus = new DBCustomer();

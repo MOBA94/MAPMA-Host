@@ -42,6 +42,10 @@ namespace ModelLayer {
         public string description {
             get; set;
         }
+        [DataMember]
+        public Employee emp {
+            get; set;
+        }
 
         public EscapeRoom(int escapeRoomID, string name, decimal price, decimal cleanTime, decimal maxClearTime, string description) {
             this.escapeRoomID = escapeRoomID;

@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ControlLayer\BookingController.cs" />
+    <Compile Include="ControlLayer\EmployeeController.cs" />
     <Compile Include="ControlLayer\EscapeRoomController.cs" />
     <Compile Include="ControlLayer\ICRUD.cs" />
     <Compile Include="ControlLayer\ProductController.cs" />
@@ -64,6 +65,7 @@
     <Compile Include="DataAccessLayer\DB.cs" />
     <Compile Include="DataAccessLayer\DBBooking.cs" />
     <Compile Include="DataAccessLayer\DBCustomer.cs" />
+    <Compile Include="DataAccessLayer\DBEmployee.cs" />
     <Compile Include="DataAccessLayer\DBEscapeRoom.cs" />
     <Compile Include="DataAccessLayer\DbProduct.cs" />
     <Compile Include="DataAccessLayer\IBOOKING.cs" />

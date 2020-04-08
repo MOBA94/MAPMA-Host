@@ -37,5 +37,9 @@ namespace ModelLayer {
             this.region = region;
             this.employeeID = employeeID;
         }
+
+        public Employee ( )
+        {
+        }
     }
 }

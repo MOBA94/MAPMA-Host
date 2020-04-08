@@ -7,19 +7,31 @@ using ModelLayer;
 using ProductService.DataAccessLayer;
 
 namespace ProductService.ControlLayer {
-    class BookingController : ICRUD<Booking> {
+    class BookingController {
         private CustomerController CusCon;
         private EscapeRoomController ERCon;
-        private IBOOKING dbBook;
+        private EmployeeController ECon;
+        private IBOOKING<Booking> dbBook;
 
         public BookingController() {
             CusCon = new CustomerController();
             ERCon = new EscapeRoomController();
-            dbBook = new IBOOKING();
+            ECon = new EmployeeController();
+            dbBook = new DBBooking();
         }
 
-        public void Create(Booking book) {
-            dbBook.Create(book);
+        public void Create(int EmpID, string username, int ER_ID, DateTime bookTime, int AOP, DateTime Bdate) {
+
+            Booking tempBook = new Booking {
+                emp = ECon.Get(EmpID),
+                cus = CusCon.Get(username),
+                er = ERCon.GetForOwner(ER_ID)
+            };
+            tempBook.bookingTime = bookTime;
+            tempBook.amountOfPeople = AOP;
+            tempBook.date = Bdate;
+
+            dbBook.Create(tempBook);
         }
 
         public void Delete(int id) {

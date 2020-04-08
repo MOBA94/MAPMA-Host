@@ -8,7 +8,7 @@ using ProductService.DataAccessLayer;
 
 namespace ProductService.ControlLayer {
     class EscapeRoomController {
-        private DBEscapeRoom DBER;
+        private IESCAPEROOM<EscapeRoom> DBER;
 
         public EscapeRoomController() {
             DBER = new DBEscapeRoom();

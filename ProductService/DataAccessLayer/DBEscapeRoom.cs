@@ -21,6 +21,7 @@ namespace ProductService.DataAccessLayer {
         public EscapeRoom GetForOwner(int ER_ID) {
             EscapeRoom escapeRoom = new EscapeRoom();
             String tempCheck;
+            DBEmployee DBemp = new DBEmployee();
 
             using (SqlConnection connection = new SqlConnection(_connectionString)) {
                 connection.Open();
@@ -47,6 +48,8 @@ namespace ProductService.DataAccessLayer {
                             escapeRoom.AddToList(tempCheck);
                             i++;
                         }
+
+                        escapeRoom.emp = DBemp.Get(reader.GetInt32(reader.GetOrdinal("EmployeeID")));
 
                     }
                 }
