@@ -36,7 +36,7 @@ namespace ModelLayer {
             this.username = username;
         }
 
-        public Customer() {
+        public Customer ( ) {
         }
     }
 }

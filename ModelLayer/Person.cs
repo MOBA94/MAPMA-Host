@@ -36,5 +36,10 @@ namespace ModelLayer {
             this.mail = Mail;
             this.phone = Phone;
         }
+
+        public Person()
+        {
+
+        }
     }
 }
