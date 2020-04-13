@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using ModelLayer;
 using ProductService.DataAccessLayer;
 
-namespace ProductService.DataAccessLayer {
+namespace ProductService.ControlLayer {
     class CustomerController {
         private ICUSTOMER<Customer> DBcus;
 

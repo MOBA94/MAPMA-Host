@@ -56,12 +56,14 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BookingServices.cs" />
     <Compile Include="ControlLayer\BookingController.cs" />
     <Compile Include="ControlLayer\EmployeeController.cs" />
     <Compile Include="ControlLayer\EscapeRoomController.cs" />
     <Compile Include="ControlLayer\ICRUD.cs" />
     <Compile Include="ControlLayer\ProductController.cs" />
     <Compile Include="ControlLayer\CustomerController.cs" />
+    <Compile Include="CustomerServices.cs" />
     <Compile Include="DataAccessLayer\DB.cs" />
     <Compile Include="DataAccessLayer\DBBooking.cs" />
     <Compile Include="DataAccessLayer\DBCustomer.cs" />
@@ -73,6 +75,12 @@
     <Compile Include="DataAccessLayer\ICUSTOMER.cs" />
     <Compile Include="DataAccessLayer\IEMPLOYEE.cs" />
     <Compile Include="DataAccessLayer\IESCAPEROOM.cs" />
+    <Compile Include="EmplyeeServices.cs" />
+    <Compile Include="EscapeRoom Services.cs" />
+    <Compile Include="IBookingServices.cs" />
+    <Compile Include="ICustomerServices.cs" />
+    <Compile Include="IEmplyeeServices.cs" />
+    <Compile Include="IEscapeRoom Services.cs" />
     <Compile Include="IProductService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ProductService.cs" />
