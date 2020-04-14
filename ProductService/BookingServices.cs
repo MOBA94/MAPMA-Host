@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ProductService.ControlLayer;
 namespace ProductService {
-    class BookingServices : IBookingServices {
+    public class BookingServices : IBookingServices {
 
         public void Create(int EmpID, string username, int ER_ID, DateTime bookTime, int AOP, DateTime Bdate) {
 

@@ -7,7 +7,7 @@ using ModelLayer;
 using ProductService.ControlLayer;
 
 namespace ProductService  {
-    class EmplyeeServices : IEmplyeeServices {
+    public class EmplyeeServices : IEmplyeeServices {
 
     public Employee Get(int id) {
         EmployeeController EmpCon = new EmployeeController();

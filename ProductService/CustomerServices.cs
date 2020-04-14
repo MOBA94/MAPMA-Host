@@ -7,7 +7,7 @@ using ProductService.ControlLayer;
 using ModelLayer;
 
 namespace ProductService {
-    class CustomerServices : ICustomerServices {
+    public class CustomerServices : ICustomerServices {
 
         public Customer Get(string username) {
 

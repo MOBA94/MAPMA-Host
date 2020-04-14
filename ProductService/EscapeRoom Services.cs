@@ -7,7 +7,7 @@ using ModelLayer;
 using ProductService.ControlLayer;
 
 namespace ProductService {
-    class EscapeRoom_Services : IEscapeRoom_Services {
+    public class EscapeRoom_Services : IEscapeRoom_Services {
 
         public EscapeRoom GetForOwner(int ER_ID) {
 

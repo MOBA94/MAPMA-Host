@@ -13,7 +13,7 @@ namespace ProductServiceHost
         static void Main(string[] args)
         {
             Console.WriteLine("----------CosoleHosting-----------");
-            using (ServiceHost serviceHost = new ServiceHost(typeof(serviseToHoset.ProductService)))
+            using (ServiceHost serviceHost = new ServiceHost(typeof(serviseToHoset.EmplyeeServices)))
             {
                 // open the host and start listening for incomming calls
                 serviceHost.Open();
