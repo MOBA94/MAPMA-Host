@@ -66,6 +66,7 @@ namespace ModelLayer {
         }
 
         public EscapeRoom() {
+            checkList = new List<string>();
         }
 
         public void AddToList(string item) {

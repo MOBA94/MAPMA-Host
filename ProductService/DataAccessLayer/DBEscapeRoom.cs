@@ -10,6 +10,11 @@ namespace ProductService.DataAccessLayer {
     class DBEscapeRoom : IESCAPEROOM<EscapeRoom> {
 
         private string _connectionString;
+
+        public DBEscapeRoom() {
+            _connectionString = DB.DbConnectionString;
+        }
+
         public void Create(EscapeRoom entity) {
             throw new NotImplementedException();
         }
@@ -26,10 +31,11 @@ namespace ProductService.DataAccessLayer {
             using (SqlConnection connection = new SqlConnection(_connectionString)) {
                 connection.Open();
                 using (SqlCommand cmdReadERs = connection.CreateCommand()) {
+                    
 
-                    cmdReadERs.CommandText = "SELECT EscapeRoom.*, CheckList.CheckList FROM EscapeRoom WHERE EscapeRoom.EscapeRoomID = @EscapeRoom.EscapeRoomID" +
-                        " LEFT JOIN CheckList ON EscapeRoom.EscapeRoomID = CheckList.EscapeRoomID ";
-                    cmdReadERs.Parameters.AddWithValue("EscapeRoom.EscapeRoomID", ER_ID);
+                    cmdReadERs.CommandText = "SELECT EscapeRoom.*, CheckList.CheckList From EscapeRoom LEFT JOIN CheckList ON " +
+                        "EscapeRoom.EscapeRoomID = CheckList.EscapeRoomID WHERE EscapeRoom.EscapeRoomID =@EscapeRoomID";
+                    cmdReadERs.Parameters.AddWithValue("EscapeRoomID", ER_ID);
                     SqlDataReader reader = cmdReadERs.ExecuteReader();
                     if (reader.Read()) {
 
@@ -43,9 +49,9 @@ namespace ProductService.DataAccessLayer {
 
                         int i = 0;
 
-                        while (reader.GetString(reader.GetOrdinal("CheckList")).Length > i) {
+                        while (reader.GetString(reader.GetOrdinal("CheckList")).Length >= i) {
                             tempCheck = reader.GetString(reader.GetOrdinal("CheckList"));
-                            escapeRoom.AddToList(tempCheck);
+                            escapeRoom.AddToList(tempCheck.ToString());
                             i++;
                         }
 

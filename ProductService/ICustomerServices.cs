@@ -7,8 +7,8 @@ using System.ServiceModel;
 using ModelLayer;
 
 namespace ProductService {
-    [ServiceContract]
-    interface ICustomerServices {
+    [ServiceContract (Namespace = "http://localhost:8737/Design_Time_Addresses/Customer/")]
+    public interface ICustomerServices {
 
         [OperationContract]
         Customer Get(string username);

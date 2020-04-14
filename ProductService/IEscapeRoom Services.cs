@@ -8,8 +8,8 @@ using ModelLayer;
 
 namespace ProductService {
 
-    [ServiceContract]
-    interface IEscapeRoom_Services {
+    [ServiceContract (Namespace = "http://localhost:8735/Design_Time_Addresses/Escaperoom/")]
+    public interface IEscapeRoom_Services {
 
         [OperationContract]
         EscapeRoom GetForOwner(int ER_ID);

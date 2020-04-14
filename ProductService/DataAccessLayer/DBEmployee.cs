@@ -13,7 +13,7 @@ namespace ProductService.DataAccessLayer
         private string _connectionString;
 
         public DBEmployee() {
-        
+            _connectionString = DB.DbConnectionString;
         }
 
         public void Create ( Employee entity )

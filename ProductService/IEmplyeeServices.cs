@@ -8,8 +8,8 @@ using ModelLayer;
 
 namespace ProductService {
 
-    [ServiceContract]
-    interface IEmplyeeServices {
+    [ServiceContract(Namespace = "http://localhost:8736/Design_Time_Addresses/Employee/")]
+    public interface IEmplyeeServices {
 
         [OperationContract]
         Employee Get(int id);
