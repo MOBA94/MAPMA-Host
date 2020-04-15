@@ -12,12 +12,25 @@ namespace ProductServiceHost
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("----------CosoleHosting-----------");
-            using (ServiceHost serviceHost = new ServiceHost(typeof(serviseToHoset.EmplyeeServices)))
-            {
+            Console.WriteLine("----------ConsoleHosting-----------");
+            using (ServiceHost EmpServiceHost = new ServiceHost(typeof(serviseToHoset.EmplyeeServices)))
+            using (ServiceHost CustomerServiceHost = new ServiceHost(typeof(serviseToHoset.CustomerServices)))
+            using (ServiceHost EscapeRoomServiceHost = new ServiceHost(typeof(serviseToHoset.EscapeRoom_Services)))
+            using (ServiceHost BookingServiceHost = new ServiceHost(typeof(serviseToHoset.BookingServices)))
+                
+                {
                 // open the host and start listening for incomming calls
-                serviceHost.Open();
-                DisplayHostInfo(serviceHost);
+                EmpServiceHost.Open();
+                CustomerServiceHost.Open();
+                EscapeRoomServiceHost.Open();
+                BookingServiceHost.Open();
+
+
+                DisplayHostInfo(EmpServiceHost);
+                DisplayHostInfo(CustomerServiceHost);
+                DisplayHostInfo(EscapeRoomServiceHost);
+                DisplayHostInfo(BookingServiceHost);
+
 
                 // keep the service running intill the key pressed
                 Console.WriteLine("the service is ready");
