@@ -7,8 +7,8 @@ using System.ServiceModel;
 using ModelLayer;
 
 namespace ProductService {
-    [ServiceContract]
-    interface IBookingServices {
+    [ServiceContract (Namespace = "http://localhost:8734/Design_Time_Addresses/Booking")]
+    public interface IBookingServices {
 
         [OperationContract]
         void Create(int EmpID, string username, int ER_ID, DateTime bookTime, int AOP, DateTime Bdate);

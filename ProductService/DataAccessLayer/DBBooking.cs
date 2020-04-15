@@ -13,6 +13,10 @@ namespace ProductService.DataAccessLayer
 
         private string _connectionString;
 
+        public DBBooking() {
+            _connectionString = DB.DbConnectionString;
+        }
+
         public void Create(Booking book)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
