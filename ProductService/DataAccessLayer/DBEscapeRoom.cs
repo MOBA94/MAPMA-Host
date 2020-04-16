@@ -49,11 +49,11 @@ namespace ProductService.DataAccessLayer {
 
                         int i = 0;
 
-                        while (reader.GetString(reader.GetOrdinal("CheckList")).Length >= i) {
-                            tempCheck = reader.GetString(reader.GetOrdinal("CheckList"));
-                            escapeRoom.AddToList(tempCheck.ToString());
-                            i++;
-                        }
+                        //while (reader.GetString(reader.GetOrdinal("CheckList")).Length >= i) {
+                        //    tempCheck = reader.GetString(reader.GetOrdinal("CheckList"));
+                        //    escapeRoom.AddToList(tempCheck.ToString());
+                        //    i++;
+                        //}
 
                         escapeRoom.emp = DBemp.Get(reader.GetInt32(reader.GetOrdinal("EmployeeID")));
 
@@ -87,11 +87,11 @@ namespace ProductService.DataAccessLayer {
 
                         int i = 0;
 
-                        while (reader.GetString(reader.GetOrdinal("CheckList")).Length > i) {
-                            tempCheck = reader.GetString(reader.GetOrdinal("CheckList"));
-                            tempER.AddToList(tempCheck);
-                            i++;
-                        }
+                        //while (reader.GetString(reader.GetOrdinal("CheckList")).Length > i) {
+                        //    tempCheck = reader.GetString(reader.GetOrdinal("CheckList"));
+                        //    tempER.AddToList(tempCheck);
+                        //    i++;
+                        //}
 
                         EscapeRooms.Add(tempER);
                     }
