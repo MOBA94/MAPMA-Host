@@ -15,8 +15,28 @@ namespace ProductService.DataAccessLayer {
             _connectionString = DB.DbConnectionString;
         }
 
-        public void Create(EscapeRoom entity) {
-            throw new NotImplementedException();
+        public void Create (string name, string description, decimal maxClearTime, decimal cleanTime, decimal price, decimal rating, int empId)
+        {
+            EscapeRoom escapeRoom = new EscapeRoom();
+            String tempCheck;
+            DBEmployee DBemp = new DBEmployee();
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                using (SqlCommand cmdReadERs = connection.CreateCommand()) {
+                        cmdReadERs.CommandText  =  "INSERT INTO EscapeRoom(EsName, EsDescription, MaxClearTime, CleanTime, Price, Rating, EmployeeID)" +
+                        "VALUES(@EsName, @EsDescription, @MaxClearTime, @CleanTime, @Price, @Rating, @EmployeeID)";
+                    cmdReadERs.Parameters.AddWithValue("EsName", name);
+                    cmdReadERs.Parameters.AddWithValue("EsDescription", description);
+                    cmdReadERs.Parameters.AddWithValue("MaxClearTime", maxClearTime);
+                    cmdReadERs.Parameters.AddWithValue("CleanTime", cleanTime);
+                    cmdReadERs.Parameters.AddWithValue("Price", price);
+                    cmdReadERs.Parameters.AddWithValue("Rating", rating);
+                    cmdReadERs.Parameters.AddWithValue("EmployeeId", empId);
+                    cmdReadERs.ExecuteNonQuery();
+                }
+            }
         }
 
         public void Delete(int id) {

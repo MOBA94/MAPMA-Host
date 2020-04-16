@@ -47,7 +47,7 @@ namespace ModelLayer {
             get; set;
         }
 
-        public EscapeRoom(int escapeRoomID, string name, decimal price, decimal cleanTime, decimal maxClearTime, string description) {
+        public EscapeRoom(int escapeRoomID, string name, string description, decimal maxClearTime, decimal cleanTime, decimal price) {
             this.escapeRoomID = escapeRoomID;
             this.name = name;
             this.price = price;
@@ -56,13 +56,23 @@ namespace ModelLayer {
             this.description = description;
             checkList = new List<string>();
         }
-        public EscapeRoom(string name, decimal price, decimal cleanTime, decimal maxClearTime, string description) {
+        public EscapeRoom(string name, string description, decimal maxClearTime, decimal cleanTime, decimal price) {
             this.name = name;
             this.price = price;
             this.cleanTime = cleanTime;
             this.maxClearTime = maxClearTime;
             this.description = description;
             checkList = new List<string>();
+        }
+
+        public EscapeRoom(string name, string description, decimal maxClearTime, decimal cleanTime, decimal price, decimal rating, int empId) {
+            this.name = name;
+            this.price = price;
+            this.cleanTime = cleanTime;
+            this.maxClearTime = maxClearTime;
+            this.description = description;
+            this.rating = rating;
+            this.emp.employeeID = empId;
         }
 
         public EscapeRoom() {

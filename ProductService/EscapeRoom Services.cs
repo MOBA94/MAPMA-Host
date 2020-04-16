@@ -24,5 +24,10 @@ namespace ProductService {
 
             return EscCon.GetAllForOwner();
         }
+
+        public void CreatEscapeRoom(string name, string description, decimal maxClearTime, decimal cleanTime, decimal price, decimal rating, int empId) {
+            EscapeRoomController EscCon = new EscapeRoomController();
+            EscCon.CreateRoomOwner(name, description, maxClearTime, cleanTime, price, rating, empId);
+        }
     }
 }

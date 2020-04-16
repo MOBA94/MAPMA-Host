@@ -21,5 +21,9 @@ namespace ProductService.ControlLayer {
         public IEnumerable<EscapeRoom> GetAllForOwner() {
             return DBER.GetAllForOwner();
         }
+
+        public void CreateRoomOwner (string name, string description, decimal maxClearTime, decimal cleanTime, decimal price, decimal rating, int empId) {
+            DBER.Create(name, description, maxClearTime, cleanTime, price, rating, empId);
+        }
     }
 }
