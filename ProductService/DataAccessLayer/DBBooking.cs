@@ -69,9 +69,9 @@ namespace ProductService.DataAccessLayer
                         book.amountOfPeople = reader.GetInt32(reader.GetOrdinal("AmountOfPeople"));
                         book.bookingTime = reader.GetDateTime(reader.GetOrdinal("Booking Time"));
                         book.date = reader.GetDateTime(reader.GetOrdinal("BDate"));
-                        book.cus = dbcus.Get(cus.username);
+                        book.cus = dbcus.Get(username);
                         book.emp = dbemp.Get(reader.GetInt32(reader.GetOrdinal("EmployeeID")));
-                        book.er = dber.GetForOwner(er.escapeRoomID);
+                        book.er = dber.GetForOwner(EmpID);
                     }
 
                 }
