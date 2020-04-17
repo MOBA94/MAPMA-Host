@@ -16,5 +16,8 @@ namespace ProductService {
 
         [OperationContract]
         IEnumerable<EscapeRoom> GetAllForOwner();
+
+        [OperationContract]
+        void CreateEscapeRoom ( string name, string description, decimal maxClearTime, decimal cleanTime, decimal price, decimal rating, int empId );
     }
 }
