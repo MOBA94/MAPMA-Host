@@ -34,12 +34,12 @@ namespace ProductService.ControlLayer {
             dbBook.Create(tempBook);
         }
 
-        public void Delete(int id) {
-            throw new NotImplementedException();
+        public void Delete(Booking book) {
+            dbBook.Delete(book);
         }
 
-        public Booking Get(int id) {
-            throw new NotImplementedException();
+        public Booking Get(EscapeRoom er,Customer cus,DateTime Bdate) {
+            return dbBook.Get(er, cus, Bdate);
         }
 
         public IEnumerable<Booking> GetAll() {

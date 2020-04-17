@@ -12,5 +12,11 @@ namespace ProductService {
 
         [OperationContract]
         void Create(int EmpID, string username, int ER_ID, DateTime bookTime, int AOP, DateTime Bdate);
+
+        [OperationContract]
+        Booking Get(EscapeRoom er, Customer cus, DateTime Bdate);
+
+        [OperationContract]
+        void Delete(Booking book);
     }
 }

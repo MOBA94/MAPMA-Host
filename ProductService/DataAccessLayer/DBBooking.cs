@@ -35,14 +35,48 @@ namespace ProductService.DataAccessLayer
                 }
             }
         }
-        public void Delete(int id)
+        public void Delete(Booking book)
         {
-            throw new NotImplementedException();
+
+            using (SqlConnection connection = new SqlConnection(_connectionString)) {
+                connection.Open();
+                using (SqlCommand cmdDeleteBook = connection.CreateCommand()) {
+                    cmdDeleteBook.CommandText = "DELETE FROM Booking WHERE UserName AND EscapeRoomID AND BDate VALUES (@UserName, @ EscapeRoomID, @BDate";
+                    cmdDeleteBook.Parameters.AddWithValue("UserName", book.cus.username);
+                    cmdDeleteBook.Parameters.AddWithValue("EscapeRoomID", book.er.escapeRoomID);
+                    cmdDeleteBook.Parameters.AddWithValue("BDate", book.date);
+                    cmdDeleteBook.ExecuteNonQuery();
+                }
+            }
         }
 
-        public Booking Get(int id)
-        {
-            throw new NotImplementedException();
+        public Booking Get(EscapeRoom er, Customer cus, DateTime Bdate) {
+            Booking book = new Booking();
+            DBCustomer dbcus = new DBCustomer();
+            DBEscapeRoom dber = new DBEscapeRoom();
+            DBEmployee dbemp = new DBEmployee();
+
+            using (SqlConnection connection = new SqlConnection(_connectionString)) {
+                connection.Open();
+                using (SqlCommand cmdGetBook = connection.CreateCommand()) {
+                    cmdGetBook.CommandText = "SELETE Booking.* FROM Booking WHERE UserName AND EscapeRoomID AND BDate VALUES (@UserName, @ EscapeRoomID, @BDate";
+                    cmdGetBook.Parameters.AddWithValue("UserName", cus.username);
+                    cmdGetBook.Parameters.AddWithValue("EscapeRoomID", er.escapeRoomID);
+                    cmdGetBook.Parameters.AddWithValue("BDate", Bdate);
+                    SqlDataReader reader = cmdGetBook.ExecuteReader();
+                    if (reader.Read()) {
+
+                        book.amountOfPeople = reader.GetInt32(reader.GetOrdinal("AmountOfPeople"));
+                        book.bookingTime = reader.GetDateTime(reader.GetOrdinal("Booking Time"));
+                        book.date = reader.GetDateTime(reader.GetOrdinal("BDate"));
+                        book.cus = dbcus.Get(cus.username);
+                        book.emp = dbemp.Get(reader.GetInt32(reader.GetOrdinal("EmployeeID")));
+                        book.er = dber.GetForOwner(er.escapeRoomID);
+                    }
+
+                }
+            }
+            return book;
         }
 
         public IEnumerable<Booking> GetAll()
