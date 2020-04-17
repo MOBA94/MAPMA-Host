@@ -19,5 +19,8 @@ namespace ProductService {
 
         [OperationContract]
         void CreateEscapeRoom ( string name, string description, decimal maxClearTime, decimal cleanTime, decimal price, decimal rating, int empId );
+
+        [OperationContract]
+        void DeleteEscapeRoom ( int ER_ID );
     }
 }

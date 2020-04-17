@@ -25,5 +25,9 @@ namespace ProductService.ControlLayer {
         public void CreateRoomOwner (string name, string description, decimal maxClearTime, decimal cleanTime, decimal price, decimal rating, int empId) {
             DBER.Create(name, description, maxClearTime, cleanTime, price, rating, empId);
         }
+
+        public void DeleteEscapeRoom (int ER_ID){
+            DBER.Delete(ER_ID);
+        }
     }
 }

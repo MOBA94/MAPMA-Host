@@ -39,8 +39,18 @@ namespace ProductService.DataAccessLayer {
             }
         }
 
-        public void Delete(int id) {
-            throw new NotImplementedException();
+        public void Delete ( int id )
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                using (SqlCommand cmdReadERs = connection.CreateCommand())
+                {
+                    cmdReadERs.CommandText = "DELETE EscapeRoom.* FROM EscapeRoom WHERE EscapeRoomID = @EscapeRoomID";
+                    cmdReadERs.Parameters.AddWithValue("EscapeRoomID", id);
+                    cmdReadERs.ExecuteNonQuery();
+                }
+            }
         }
 
         public EscapeRoom GetForOwner(int ER_ID) {
