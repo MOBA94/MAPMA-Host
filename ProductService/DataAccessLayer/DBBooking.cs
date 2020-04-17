@@ -50,7 +50,7 @@ namespace ProductService.DataAccessLayer
             }
         }
 
-        public Booking Get(EscapeRoom er, Customer cus, DateTime Bdate) {
+        public Booking Get(int EmpID, string username, DateTime Bdate) {
             Booking book = new Booking();
             DBCustomer dbcus = new DBCustomer();
             DBEscapeRoom dber = new DBEscapeRoom();
@@ -60,8 +60,8 @@ namespace ProductService.DataAccessLayer
                 connection.Open();
                 using (SqlCommand cmdGetBook = connection.CreateCommand()) {
                     cmdGetBook.CommandText = "SELETE Booking.* FROM Booking WHERE UserName AND EscapeRoomID AND BDate VALUES (@UserName, @ EscapeRoomID, @BDate";
-                    cmdGetBook.Parameters.AddWithValue("UserName", cus.username);
-                    cmdGetBook.Parameters.AddWithValue("EscapeRoomID", er.escapeRoomID);
+                    cmdGetBook.Parameters.AddWithValue("UserName", username);
+                    cmdGetBook.Parameters.AddWithValue("EscapeRoomID", EmpID);
                     cmdGetBook.Parameters.AddWithValue("BDate", Bdate);
                     SqlDataReader reader = cmdGetBook.ExecuteReader();
                     if (reader.Read()) {

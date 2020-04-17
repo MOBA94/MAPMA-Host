@@ -34,12 +34,22 @@ namespace ProductService.ControlLayer {
             dbBook.Create(tempBook);
         }
 
-        public void Delete(Booking book) {
-            dbBook.Delete(book);
+        public void Delete(int EmpID, string username, int ER_ID, DateTime bookTime, int AOP, DateTime Bdate) {
+            
+            Booking tempBook = new Booking {
+                emp = ECon.Get(EmpID),
+                cus = CusCon.Get(username),
+                er = ERCon.GetForOwner(ER_ID)
+            };
+            tempBook.bookingTime = bookTime;
+            tempBook.amountOfPeople = AOP;
+            tempBook.date = Bdate;
+
+            dbBook.Delete(tempBook);
         }
 
-        public Booking Get(EscapeRoom er,Customer cus,DateTime Bdate) {
-            return dbBook.Get(er, cus, Bdate);
+        public Booking Get(int EmpID, string username, DateTime Bdate) {
+            return dbBook.Get(EmpID, username, Bdate);
         }
 
         public IEnumerable<Booking> GetAll() {

@@ -17,15 +17,15 @@ namespace ProductService {
             BCon.Create(EmpID, username, ER_ID, bookTime, AOP, Bdate);
         }
 
-        public void Delete(Booking book) {
+        public void Delete(int EmpID, string username, int ER_ID, DateTime bookTime, int AOP, DateTime Bdate) {
             BookingController BCon = new BookingController();
-            BCon.Delete(book);
+            BCon.Delete(EmpID, username, ER_ID, bookTime, AOP, Bdate);
         }
 
-        public Booking Get(EscapeRoom er, Customer cus, DateTime Bdate) {
+        public Booking Get(int EmpID, string username, DateTime Bdate) {
             BookingController BCon = new BookingController();
 
-            return BCon.Get(er, cus, Bdate);
+            return BCon.Get(EmpID, username, Bdate);
         }
     }
 }
