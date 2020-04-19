@@ -39,11 +39,11 @@ namespace ProductService.ControlLayer {
             Booking tempBook = new Booking {
                 emp = ECon.Get(EmpID),
                 cus = CusCon.Get(username),
-                er = ERCon.GetForOwner(ER_ID)
+                er = ERCon.GetForOwner(ER_ID),
+                amountOfPeople = AOP,
+                bookingTime = bookTime,
+                date = Bdate
             };
-            tempBook.bookingTime = bookTime;
-            tempBook.amountOfPeople = AOP;
-            tempBook.date = Bdate;
 
             dbBook.Delete(tempBook);
         }

@@ -60,9 +60,9 @@ namespace ProductService.DataAccessLayer
                 connection.Open();
                 using (SqlCommand cmdGetBook = connection.CreateCommand()) {
                     cmdGetBook.CommandText = "SELECT Booking.* FROM Booking WHERE UserName =@UserName AND EscapeRoomID =@EscapeRoomID AND BDate =@BDate";
-                    cmdGetBook.Parameters.AddWithValue("UserName", username);
-                    cmdGetBook.Parameters.AddWithValue("EscapeRoomID", EmpID);
-                    cmdGetBook.Parameters.AddWithValue("BDate", Bdate);
+                    cmdGetBook.Parameters.AddWithValue("@UserName", username);
+                    cmdGetBook.Parameters.AddWithValue("@EscapeRoomID", EmpID);
+                    cmdGetBook.Parameters.AddWithValue("@BDate", Bdate);
                     SqlDataReader reader = cmdGetBook.ExecuteReader();
                     if (reader.Read()) {
 
