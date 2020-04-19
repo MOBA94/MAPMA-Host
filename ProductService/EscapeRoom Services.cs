@@ -29,5 +29,11 @@ namespace ProductService {
             EscapeRoomController EscCon = new EscapeRoomController();
             EscCon.CreateRoomOwner(name, description, maxClearTime, cleanTime, price, rating, empId);
         }
+
+        public void DeleteEscapeRoom ( int ER_ID )
+        {
+            EscapeRoomController EscCon = new EscapeRoomController();
+            EscCon.DeleteEscapeRoom(ER_ID);
+        }
     }
 }
