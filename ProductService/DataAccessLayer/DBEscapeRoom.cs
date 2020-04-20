@@ -46,7 +46,7 @@ namespace ProductService.DataAccessLayer {
                 connection.Open();
                 using (SqlCommand cmdReadERs = connection.CreateCommand())
                 {
-                    cmdReadERs.CommandText = "DELETE EscapeRoom.* FROM EscapeRoom WHERE EscapeRoomID = @EscapeRoomID";
+                    cmdReadERs.CommandText = "DELETE FROM EscapeRoom WHERE EscapeRoomID = @EscapeRoomID";
                     cmdReadERs.Parameters.AddWithValue("EscapeRoomID", id);
                     cmdReadERs.ExecuteNonQuery();
                 }
@@ -76,6 +76,7 @@ namespace ProductService.DataAccessLayer {
                         escapeRoom.cleanTime = reader.GetInt32(reader.GetOrdinal("CleanTime"));
                         escapeRoom.description = reader.GetString(reader.GetOrdinal("EsDescription"));
                         escapeRoom.rating = reader.GetDecimal(reader.GetOrdinal("Rating"));
+                        escapeRoom.emp = DBemp.Get(reader.GetInt32(reader.GetOrdinal("EmployeeID")));
 
                         int i = 0;
 
@@ -85,7 +86,6 @@ namespace ProductService.DataAccessLayer {
                         //    i++;
                         //}
 
-                        escapeRoom.emp = DBemp.Get(reader.GetInt32(reader.GetOrdinal("EmployeeID")));
 
                     }
                 }
@@ -97,6 +97,8 @@ namespace ProductService.DataAccessLayer {
             List<EscapeRoom> EscapeRooms = new List<EscapeRoom>();
             EscapeRoom tempER;
             String tempCheck;
+            DBEmployee EmpDB = new DBEmployee(); 
+            ;
 
             using (SqlConnection connection = new SqlConnection(_connectionString)) {
                 connection.Open();
@@ -114,6 +116,7 @@ namespace ProductService.DataAccessLayer {
                         tempER.cleanTime = reader.GetInt32(reader.GetOrdinal("CleanTime"));
                         tempER.description = reader.GetString(reader.GetOrdinal("EsDescription"));
                         tempER.rating = reader.GetDecimal(reader.GetOrdinal("Rating"));
+                        tempER.emp = EmpDB.Get(reader.GetInt32(reader.GetOrdinal("EmployeeID")));
 
                         int i = 0;
 
