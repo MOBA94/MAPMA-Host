@@ -17,9 +17,9 @@ namespace ProductService {
             BCon.Create(EmpID, username, ER_ID, bookTime, AOP, Bdate);
         }
 
-        public void Delete(int EmpID, string username, int ER_ID, DateTime bookTime, int AOP, DateTime Bdate) {
+        public void Delete(int EscID, string username, int ER_ID, DateTime bookTime, int AOP, DateTime Bdate) {
             BookingController BCon = new BookingController();
-            BCon.Delete(EmpID, username, ER_ID, bookTime, AOP, Bdate);
+            BCon.Delete(EscID, username, ER_ID, bookTime, AOP, Bdate);
         }
 
         public Booking Get(int EmpID, string username, DateTime Bdate) {

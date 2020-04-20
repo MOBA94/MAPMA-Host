@@ -50,7 +50,7 @@ namespace ProductService.DataAccessLayer
             }
         }
 
-        public Booking Get(int EmpID, string username, DateTime Bdate) {
+        public Booking Get(int EscID, string username, DateTime Bdate) {
             Booking book = new Booking();
             DBCustomer dbcus = new DBCustomer();
             DBEscapeRoom dber = new DBEscapeRoom();
@@ -61,17 +61,18 @@ namespace ProductService.DataAccessLayer
                 using (SqlCommand cmdGetBook = connection.CreateCommand()) {
                     cmdGetBook.CommandText = "SELECT Booking.* FROM Booking WHERE UserName =@UserName AND EscapeRoomID =@EscapeRoomID AND BDate =@BDate";
                     cmdGetBook.Parameters.AddWithValue("@UserName", username);
-                    cmdGetBook.Parameters.AddWithValue("@EscapeRoomID", EmpID);
+                    cmdGetBook.Parameters.AddWithValue("@EscapeRoomID", EscID);
                     cmdGetBook.Parameters.AddWithValue("@BDate", Bdate);
                     SqlDataReader reader = cmdGetBook.ExecuteReader();
                     if (reader.Read()) {
 
                         book.amountOfPeople = reader.GetInt32(reader.GetOrdinal("AmountOfPeople"));
-                        book.bookingTime = reader.GetDateTime(reader.GetOrdinal("Booking Time"));
+                        // kan ikke lave den om til dateTime kigger vi på når vi kommer til Get booking for owner
+                        //book.bookingTime = reader.GetDateTime(reader.GetOrdinal("BookingTime"));
                         book.date = reader.GetDateTime(reader.GetOrdinal("BDate"));
                         book.cus = dbcus.Get(username);
                         book.emp = dbemp.Get(reader.GetInt32(reader.GetOrdinal("EmployeeID")));
-                        book.er = dber.GetForOwner(EmpID);
+                        book.er = dber.GetForOwner(EscID);
                     }
 
                 }

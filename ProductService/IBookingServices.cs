@@ -14,7 +14,7 @@ namespace ProductService {
         void Create(int EmpID, string username, int ER_ID, DateTime bookTime, int AOP, DateTime Bdate);
 
         [OperationContract]
-        Booking Get(int EmpID, string username, DateTime Bdate);
+        Booking Get(int EscID, string username, DateTime Bdate);
 
         [OperationContract]
         void Delete(int EmpID, string username, int ER_ID, DateTime bookTime, int AOP, DateTime Bdate);

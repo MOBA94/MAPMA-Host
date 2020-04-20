@@ -48,8 +48,8 @@ namespace ProductService.ControlLayer {
             dbBook.Delete(tempBook);
         }
 
-        public Booking Get(int EmpID, string username, DateTime Bdate) {
-            return dbBook.Get(EmpID, username, Bdate);
+        public Booking Get(int EscID, string username, DateTime Bdate) {
+            return dbBook.Get(EscID, username, Bdate);
         }
 
         public IEnumerable<Booking> GetAll() {
