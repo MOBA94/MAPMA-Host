@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace ProductService.DataAccessLayer {
     interface IBOOKING<T> {
         void Create(T entity);
-        T Get(int EmpID, string username, DateTime Bdate);
+        Booking Get(int EmpID, string username, DateTime Bdate);
         IEnumerable<T> GetAll();
         void Update(T entity);
         void Delete(Booking book);
