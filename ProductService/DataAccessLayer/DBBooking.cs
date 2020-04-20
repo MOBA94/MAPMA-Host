@@ -41,7 +41,7 @@ namespace ProductService.DataAccessLayer
             using (SqlConnection connection = new SqlConnection(_connectionString)) {
                 connection.Open();
                 using (SqlCommand cmdDeleteBook = connection.CreateCommand()) {
-                    cmdDeleteBook.CommandText = "DELETE FROM Booking WHERE UserName AND EscapeRoomID AND BDate VALUES (@UserName, @ EscapeRoomID, @BDate";
+                    cmdDeleteBook.CommandText = "DELETE FROM Booking WHERE UserName =@UserName AND EscapeRoomID =@EscapeRoomID AND BDate =@BDate";
                     cmdDeleteBook.Parameters.AddWithValue("UserName", book.cus.username);
                     cmdDeleteBook.Parameters.AddWithValue("EscapeRoomID", book.er.escapeRoomID);
                     cmdDeleteBook.Parameters.AddWithValue("BDate", book.date);
