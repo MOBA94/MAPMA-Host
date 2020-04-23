@@ -18,7 +18,7 @@ namespace ModelLayer
         [DataMember]
         public DateTime date { get; set; }
         [DataMember]
-        public DateTime bookingTime { get; set; }
+        public TimeSpan bookingTime { get; set; }
         [DataMember]
         public EscapeRoom er { get; set; }
         [DataMember]
@@ -26,14 +26,14 @@ namespace ModelLayer
         [DataMember]
         public Employee emp { get; set; }
 
-        public Booking(int amountOfPeople, DateTime date, DateTime bookingTime)
+        public Booking(int amountOfPeople, DateTime date, TimeSpan bookingTime)
         {
             this.amountOfPeople = amountOfPeople;
             this.date = date;
             this.bookingTime = bookingTime;
         }
 
-        public Booking(int amountOfPeople, DateTime date, DateTime bookingTime, Customer cus, EscapeRoom er)
+        public Booking(int amountOfPeople, DateTime date, TimeSpan bookingTime, Customer cus, EscapeRoom er)
         {
             this.amountOfPeople = amountOfPeople;
             this.date = date;
@@ -43,7 +43,7 @@ namespace ModelLayer
 
         }
 
-        public Booking(int amountOfPeople, DateTime date, DateTime bookingTime, Employee emp, EscapeRoom er)
+        public Booking(int amountOfPeople, DateTime date, TimeSpan bookingTime, Employee emp, EscapeRoom er)
         {
             this.amountOfPeople = amountOfPeople;
             this.date = date;

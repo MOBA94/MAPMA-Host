@@ -11,12 +11,15 @@ namespace ProductService {
     public interface IBookingServices {
 
         [OperationContract]
-        void Create(int EmpID, string username, int ER_ID, DateTime bookTime, int AOP, DateTime Bdate);
+        void Create(int EmpID, string username, int ER_ID, TimeSpan bookTime, int AOP, DateTime Bdate);
 
         [OperationContract]
         Booking Get(int EscID, string username, DateTime Bdate);
 
         [OperationContract]
-        void Delete(int EmpID, string username, int ER_ID, DateTime bookTime, int AOP, DateTime Bdate);
+        IEnumerable<Booking> GetAll();
+
+        [OperationContract]
+        void Delete(int EmpID, string username, int ER_ID, TimeSpan bookTime, int AOP, DateTime Bdate);
     }
 }

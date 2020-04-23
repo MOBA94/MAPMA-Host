@@ -10,14 +10,14 @@ namespace ProductService {
    [ServiceBehavior(Namespace = "http://localhost:8734/Design_Time_Addresses/Booking")]
     public class BookingServices : IBookingServices {
 
-        public void Create(int EmpID, string username, int ER_ID, DateTime bookTime, int AOP, DateTime Bdate) {
+        public void Create(int EmpID, string username, int ER_ID, TimeSpan bookTime, int AOP, DateTime Bdate) {
 
             BookingController BCon = new BookingController();
 
             BCon.Create(EmpID, username, ER_ID, bookTime, AOP, Bdate);
         }
 
-        public void Delete(int EscID, string username, int ER_ID, DateTime bookTime, int AOP, DateTime Bdate) {
+        public void Delete(int EscID, string username, int ER_ID, TimeSpan bookTime, int AOP, DateTime Bdate) {
             BookingController BCon = new BookingController();
             BCon.Delete(EscID, username, ER_ID, bookTime, AOP, Bdate);
         }
@@ -26,6 +26,13 @@ namespace ProductService {
             BookingController BCon = new BookingController();
 
             return BCon.Get(EmpID, username, Bdate);
+        }
+
+        public IEnumerable<Booking> GetAll ( )
+        {
+            BookingController bookCon = new BookingController();
+
+            return bookCon.GetAll();
         }
     }
 }

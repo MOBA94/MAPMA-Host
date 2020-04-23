@@ -22,7 +22,7 @@ namespace WCFServiceTest
             ModelLayer.EscapeRoom Es1 = new ModelLayer.EscapeRoom();
             ModelLayer.Employee Em1 = empSer.Get(1);
             Es1.name = "The Dark Room";
-            Es1.description = "The Fors is Strong in the darkside";
+            Es1.description = "The Force is Strong in the darkRoom";
             Es1.maxClearTime = 180;
             Es1.cleanTime = 90;
             Es1.price = 1200;
