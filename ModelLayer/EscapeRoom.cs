@@ -46,6 +46,10 @@ namespace ModelLayer {
         public Employee emp {
             get; set;
         }
+        [DataMember]
+        public List<TimeSpan> AvalibleTimes {
+            get; set;
+        }
 
         public EscapeRoom(int escapeRoomID, string name, string description, decimal maxClearTime, decimal cleanTime, decimal price) {
             this.escapeRoomID = escapeRoomID;
@@ -55,6 +59,8 @@ namespace ModelLayer {
             this.maxClearTime = maxClearTime;
             this.description = description;
             checkList = new List<string>();
+            AvalibleTimes = new List<TimeSpan>();
+            AddTimesToList();
         }
         public EscapeRoom(string name, string description, decimal maxClearTime, decimal cleanTime, decimal price) {
             this.name = name;
@@ -63,6 +69,8 @@ namespace ModelLayer {
             this.maxClearTime = maxClearTime;
             this.description = description;
             checkList = new List<string>();
+            AvalibleTimes = new List<TimeSpan>();
+            AddTimesToList();
         }
 
         public EscapeRoom(string name, string description, decimal maxClearTime, decimal cleanTime, decimal price, decimal rating, int empId) {
@@ -73,14 +81,32 @@ namespace ModelLayer {
             this.description = description;
             this.rating = rating;
             this.emp.employeeID = empId;
+            AvalibleTimes = new List<TimeSpan>();
+            AddTimesToList();
+
         }
 
         public EscapeRoom() {
             checkList = new List<string>();
+            AvalibleTimes = new List<TimeSpan>();
+            AddTimesToList();
         }
 
         public void AddToList(string item) {
             checkList.Add(item);
+        }
+
+        public void AddTimesToList() {
+            TimeSpan time1, time2, time3, time4, time5;
+            time1 = new TimeSpan(16, 00, 00);
+            time2 = new TimeSpan(18, 00, 00);
+            time3 = new TimeSpan(20, 00, 00);
+            time4 = new TimeSpan(22, 00, 00);
+            time5 = new TimeSpan(00, 00, 00);
+
+            AvalibleTimes.AddRange(new List<TimeSpan>() { time1, time2, time3, time4, time5 });
+                
+
         }
     }
 }
