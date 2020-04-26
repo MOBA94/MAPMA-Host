@@ -16,5 +16,9 @@ namespace ProductService {
 
         [OperationContract]
         IEnumerable<EscapeRoom> GetAllForOwner();
+
+        [OperationContract]
+        List<TimeSpan> GteTimeForEscapeRoom(int ER_ID);
+
     }
 }

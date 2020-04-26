@@ -24,7 +24,7 @@ using ProductService.DataAccessLayer;
 
         public List<TimeSpan> GetTimesForEscapeRoom(int ER_ID) {
             List<TimeSpan> Time = new List<TimeSpan>();
-            TimeSpan onetime = new TimeSpan();
+           
 
             var hours = 0;
             var minutes = 0;            
@@ -34,14 +34,10 @@ using ProductService.DataAccessLayer;
                 minutes = i % 60;
                 if (minutes < 10) {
                     minutes = '0' + minutes; // adding leading zero to minutes portion
-                }
-
+                }                
                 Console.WriteLine(hours +","+ minutes);
-                onetime(hours, minutes, 00);
-                //add the value to dropdownlist
-                select.append($( '<option></option>' )
-                    .attr('value', hours)
-                    (hours , minutes));
+                TimeSpan onetime = new TimeSpan(hours, minutes, 00);
+                Time.Add(onetime);               
             }
 
             return Time;
