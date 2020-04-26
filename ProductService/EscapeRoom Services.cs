@@ -24,5 +24,12 @@ namespace ProductService {
 
             return EscCon.GetAllForOwner();
         }
+
+        public List<TimeSpan> GteTimeForEscapeRoom(int ER_ID) {
+            EscapeRoomController EscCon = new EscapeRoomController();
+
+            return EscCon.GetTimesForEscapeRoom(ER_ID);
+        }
+        
     }
 }

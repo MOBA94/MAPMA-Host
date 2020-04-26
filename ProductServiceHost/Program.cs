@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ServiceModel;
 using serviseToHoset = ProductService;
+using ProductService.ControlLayer;
 
 namespace ProductServiceHost
 {
@@ -12,11 +13,14 @@ namespace ProductServiceHost
     {
         static void Main(string[] args)
         {
+            
+            
             Console.WriteLine("----------ConsoleHosting-----------");
             using (ServiceHost EmpServiceHost = new ServiceHost(typeof(serviseToHoset.EmplyeeServices)))
             using (ServiceHost CustomerServiceHost = new ServiceHost(typeof(serviseToHoset.CustomerServices)))
             using (ServiceHost EscapeRoomServiceHost = new ServiceHost(typeof(serviseToHoset.EscapeRoom_Services)))
             using (ServiceHost BookingServiceHost = new ServiceHost(typeof(serviseToHoset.BookingServices)))
+                
                 
                 {
                 // open the host and start listening for incomming calls
