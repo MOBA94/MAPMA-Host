@@ -46,7 +46,7 @@ namespace ModelLayer {
         public Employee emp {
             get; set;
         }
-
+        [DataMember]
         public List<TimeSpan> AvalibleTimes {
             get; set;
         }
@@ -59,6 +59,7 @@ namespace ModelLayer {
             this.maxClearTime = maxClearTime;
             this.description = description;
             checkList = new List<string>();
+            AvalibleTimes = new List<TimeSpan>();
             AddTimesToList();
         }
         public EscapeRoom(string name, string description, decimal maxClearTime, decimal cleanTime, decimal price) {
@@ -68,6 +69,7 @@ namespace ModelLayer {
             this.maxClearTime = maxClearTime;
             this.description = description;
             checkList = new List<string>();
+            AvalibleTimes = new List<TimeSpan>();
             AddTimesToList();
         }
 
@@ -79,11 +81,13 @@ namespace ModelLayer {
             this.description = description;
             this.rating = rating;
             this.emp.employeeID = empId;
+            AvalibleTimes = new List<TimeSpan>();
             AddTimesToList();
         }
 
         public EscapeRoom() {
             checkList = new List<string>();
+            AvalibleTimes = new List<TimeSpan>();
             AddTimesToList();
         }
 
