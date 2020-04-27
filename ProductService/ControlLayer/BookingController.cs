@@ -20,7 +20,7 @@ namespace ProductService.ControlLayer {
             dbBook = new DBBooking();
         }
 
-        public void Create(int EmpID, string username, int ER_ID, DateTime bookTime, int AOP, DateTime Bdate) {
+        public void Create(int EmpID, string username, int ER_ID, TimeSpan bookTime, int AOP, DateTime Bdate) {
 
             Booking tempBook = new Booking {
                 emp = ECon.Get(EmpID),
@@ -34,7 +34,7 @@ namespace ProductService.ControlLayer {
             dbBook.Create(tempBook);
         }
 
-        public void Delete(int EmpID, string username, int ER_ID, DateTime bookTime, int AOP, DateTime Bdate) {
+        public void Delete(int EmpID, string username, int ER_ID, TimeSpan bookTime, int AOP, DateTime Bdate) {
             
             Booking tempBook = new Booking {
                 emp = ECon.Get(EmpID),
@@ -53,7 +53,7 @@ namespace ProductService.ControlLayer {
         }
 
         public IEnumerable<Booking> GetAll() {
-            throw new NotImplementedException();
+            return dbBook.GetAll();
         }
 
         public void Update(Booking entity) {

@@ -8,19 +8,49 @@ using ModelLayer;
 
 namespace ProductService.DataAccessLayer {
     class DBEscapeRoom : IESCAPEROOM<EscapeRoom> {
-
+         
         private string _connectionString;
 
         public DBEscapeRoom() {
             _connectionString = DB.DbConnectionString;
         }
 
-        public void Create(EscapeRoom entity) {
-            throw new NotImplementedException();
+        public void Create (string name, string description, decimal maxClearTime, decimal cleanTime, decimal price, decimal rating, int empId)
+        {
+            EscapeRoom escapeRoom = new EscapeRoom();
+            String tempCheck;
+            DBEmployee DBemp = new DBEmployee();
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                using (SqlCommand cmdReadERs = connection.CreateCommand()) {
+                        cmdReadERs.CommandText  =  "INSERT INTO EscapeRoom(EsName, EsDescription, MaxClearTime, CleanTime, Price, Rating, EmployeeID)" +
+                        "VALUES(@EsName, @EsDescription, @MaxClearTime, @CleanTime, @Price, @Rating, @EmployeeID)";
+                    cmdReadERs.Parameters.AddWithValue("EsName", name);
+                    cmdReadERs.Parameters.AddWithValue("EsDescription", description);
+                    cmdReadERs.Parameters.AddWithValue("MaxClearTime", maxClearTime);
+                    cmdReadERs.Parameters.AddWithValue("CleanTime", cleanTime);
+                    cmdReadERs.Parameters.AddWithValue("Price", price);
+                    cmdReadERs.Parameters.AddWithValue("Rating", rating);
+                    cmdReadERs.Parameters.AddWithValue("EmployeeId", empId);
+                    cmdReadERs.ExecuteNonQuery();
+                }
+            }
         }
 
-        public void Delete(int id) {
-            throw new NotImplementedException();
+        public void Delete ( int id )
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                using (SqlCommand cmdReadERs = connection.CreateCommand())
+                {
+                    cmdReadERs.CommandText = "DELETE FROM EscapeRoom WHERE EscapeRoomID = @EscapeRoomID";
+                    cmdReadERs.Parameters.AddWithValue("EscapeRoomID", id);
+                    cmdReadERs.ExecuteNonQuery();
+                }
+            }
         }
 
         public EscapeRoom GetForOwner(int ER_ID) {
@@ -46,6 +76,8 @@ namespace ProductService.DataAccessLayer {
                         escapeRoom.cleanTime = reader.GetInt32(reader.GetOrdinal("CleanTime"));
                         escapeRoom.description = reader.GetString(reader.GetOrdinal("EsDescription"));
                         escapeRoom.rating = reader.GetDecimal(reader.GetOrdinal("Rating"));
+                        escapeRoom.emp = DBemp.Get(reader.GetInt32(reader.GetOrdinal("EmployeeID")));
+                       
 
                         int i = 0;
 
@@ -55,7 +87,6 @@ namespace ProductService.DataAccessLayer {
                         //    i++;
                         //}
 
-                        escapeRoom.emp = DBemp.Get(reader.GetInt32(reader.GetOrdinal("EmployeeID")));
 
                     }
                 }
@@ -67,6 +98,8 @@ namespace ProductService.DataAccessLayer {
             List<EscapeRoom> EscapeRooms = new List<EscapeRoom>();
             EscapeRoom tempER;
             String tempCheck;
+            DBEmployee EmpDB = new DBEmployee(); 
+            ;
 
             using (SqlConnection connection = new SqlConnection(_connectionString)) {
                 connection.Open();
@@ -84,6 +117,9 @@ namespace ProductService.DataAccessLayer {
                         tempER.cleanTime = reader.GetInt32(reader.GetOrdinal("CleanTime"));
                         tempER.description = reader.GetString(reader.GetOrdinal("EsDescription"));
                         tempER.rating = reader.GetDecimal(reader.GetOrdinal("Rating"));
+                        tempER.emp = EmpDB.Get(reader.GetInt32(reader.GetOrdinal("EmployeeID")));
+                        
+                        
 
                         int i = 0;
 

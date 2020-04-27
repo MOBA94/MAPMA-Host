@@ -6,12 +6,14 @@ using System.Threading.Tasks;
 using ModelLayer;
 using ProductService.DataAccessLayer;
 
- namespace ProductService.ControlLayer {
-   class EscapeRoomController {
+namespace ProductService.ControlLayer {
+    class EscapeRoomController {
         private IESCAPEROOM<EscapeRoom> DBER;
 
         public EscapeRoomController() {
             DBER = new DBEscapeRoom();
+            
+           
         }
 
         public EscapeRoom GetForOwner(int ER_ID) {
@@ -22,25 +24,15 @@ using ProductService.DataAccessLayer;
             return DBER.GetAllForOwner();
         }
 
-        public List<TimeSpan> GetTimesForEscapeRoom(int ER_ID) {
-            List<TimeSpan> Time = new List<TimeSpan>();
-           
-
-            var hours = 0;
-            var minutes = 0;            
-             EscapeRoom esc =  GetForOwner(ER_ID);
-            for (var i = 960; i <= 1330; i += decimal.ToInt32(esc.maxClearTime) + decimal.ToInt32( esc.cleanTime) ) {
-                hours = (i / 60);
-                minutes = i % 60;
-                if (minutes < 10) {
-                    minutes = '0' + minutes; // adding leading zero to minutes portion
-                }                
-                Console.WriteLine(hours +","+ minutes);
-                TimeSpan onetime = new TimeSpan(hours, minutes, 00);
-                Time.Add(onetime);               
-            }
-
-            return Time;
+        public void CreateRoomOwner (string name, string description, decimal maxClearTime, decimal cleanTime, decimal price, decimal rating, int empId) {
+            DBER.Create(name, description, maxClearTime, cleanTime, price, rating, empId);
         }
+
+        public void DeleteEscapeRoom (int ER_ID){
+            DBER.Delete(ER_ID);
+        }
+
+        
+
     }
 }
