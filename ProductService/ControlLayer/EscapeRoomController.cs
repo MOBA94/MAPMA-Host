@@ -12,6 +12,8 @@ namespace ProductService.ControlLayer {
 
         public EscapeRoomController() {
             DBER = new DBEscapeRoom();
+            
+           
         }
 
         public EscapeRoom GetForOwner(int ER_ID) {
@@ -29,5 +31,8 @@ namespace ProductService.ControlLayer {
         public void DeleteEscapeRoom (int ER_ID){
             DBER.Delete(ER_ID);
         }
+
+        
+
     }
 }

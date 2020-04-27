@@ -8,7 +8,7 @@ using ModelLayer;
 
 namespace ProductService.DataAccessLayer {
     class DBEscapeRoom : IESCAPEROOM<EscapeRoom> {
-
+         
         private string _connectionString;
 
         public DBEscapeRoom() {
@@ -77,6 +77,7 @@ namespace ProductService.DataAccessLayer {
                         escapeRoom.description = reader.GetString(reader.GetOrdinal("EsDescription"));
                         escapeRoom.rating = reader.GetDecimal(reader.GetOrdinal("Rating"));
                         escapeRoom.emp = DBemp.Get(reader.GetInt32(reader.GetOrdinal("EmployeeID")));
+                       
 
                         int i = 0;
 
@@ -117,6 +118,8 @@ namespace ProductService.DataAccessLayer {
                         tempER.description = reader.GetString(reader.GetOrdinal("EsDescription"));
                         tempER.rating = reader.GetDecimal(reader.GetOrdinal("Rating"));
                         tempER.emp = EmpDB.Get(reader.GetInt32(reader.GetOrdinal("EmployeeID")));
+                        
+                        
 
                         int i = 0;
 
