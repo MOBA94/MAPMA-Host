@@ -17,6 +17,38 @@ namespace ProductService.DataAccessLayer
             _connectionString = DB.DbConnectionString;
         }
 
+        public List<Booking> CheckBooking(int EscID, DateTime Bdate) {
+            Booking TempBook;
+           List<Booking> book = new List<Booking>();
+            DBCustomer dbcus = new DBCustomer();
+            DBEscapeRoom dber = new DBEscapeRoom();
+            DBEmployee dbemp = new DBEmployee();
+            
+
+            using (SqlConnection connection = new SqlConnection(_connectionString)) {
+                connection.Open();
+                using (SqlCommand cmdGetBook = connection.CreateCommand()) {
+                    cmdGetBook.CommandText = "SELECT Booking.* FROM Booking WHERE EscapeRoomID =@EscapeRoomID AND BDate =@BDate";
+                    //skal være et lop og en excutebatch tror jeg. skal også retunere et list af bookings
+                    cmdGetBook.Parameters.AddWithValue("@EscapeRoomID", EscID);
+                    cmdGetBook.Parameters.AddWithValue("@BDate", Bdate);
+                    SqlDataReader reader = cmdGetBook.ExecuteReader();
+                    while (reader.Read()) {
+                        TempBook = new Booking();
+
+                        TempBook.amountOfPeople = reader.GetInt32(reader.GetOrdinal("AmountOfPeople"));
+                        TempBook.bookingTime = reader.GetTimeSpan(reader.GetOrdinal("BookingTime"));
+                        TempBook.date = reader.GetDateTime(reader.GetOrdinal("BDate"));
+                        TempBook.emp = dbemp.Get(reader.GetInt32(reader.GetOrdinal("EmployeeID")));
+                        TempBook.er = dber.GetForOwner(EscID);
+                        book.Add(TempBook);
+                    }
+                    
+                }
+            }
+            return book;
+        }
+
         public void Create(Booking book)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))

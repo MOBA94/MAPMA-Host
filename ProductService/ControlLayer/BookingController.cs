@@ -59,5 +59,9 @@ namespace ProductService.ControlLayer {
         public void Update(Booking entity) {
             throw new NotImplementedException();
         }
+
+        public List<Booking> CheckBooking(int EscID, DateTime Bdate) {
+            return dbBook.CheckBooking(EscID, Bdate);
+        }
     }
 }
