@@ -11,7 +11,7 @@ namespace ProductService {
     public interface IBookingServices {
 
         [OperationContract]
-        void Create(int EmpID, string username, int ER_ID, TimeSpan bookTime, int AOP, DateTime Bdate);
+        int Create(int EmpID, string username, int ER_ID, TimeSpan bookTime, int AOP, DateTime Bdate);
 
         [OperationContract]
         Booking Get(int EscID, string username, DateTime Bdate);
