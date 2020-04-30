@@ -20,11 +20,9 @@ namespace ProductService.DataAccessLayer
 
         public List<Booking> CheckBooking(int EscID, DateTime Bdate) {
             Booking TempBook;
-           List<Booking> book = new List<Booking>();
-            DBCustomer dbcus = new DBCustomer();
+           List<Booking> book = new List<Booking>();            
             DBEscapeRoom dber = new DBEscapeRoom();
-            DBEmployee dbemp = new DBEmployee();
-            
+            DBEmployee dbemp = new DBEmployee();            
 
             using (SqlConnection connection = new SqlConnection(_connectionString)) {
                 connection.Open();
@@ -36,15 +34,13 @@ namespace ProductService.DataAccessLayer
                     SqlDataReader reader = cmdGetBook.ExecuteReader();
                     while (reader.Read()) {
                         TempBook = new Booking();
-
                         TempBook.amountOfPeople = reader.GetInt32(reader.GetOrdinal("AmountOfPeople"));
                         TempBook.bookingTime = reader.GetTimeSpan(reader.GetOrdinal("BookingTime"));
                         TempBook.date = reader.GetDateTime(reader.GetOrdinal("BDate"));
                         TempBook.emp = dbemp.Get(reader.GetInt32(reader.GetOrdinal("EmployeeID")));
                         TempBook.er = dber.GetForOwner(EscID);
                         book.Add(TempBook);
-                    }
-                    
+                    }                    
                 }
             }
             return book;
@@ -58,7 +54,9 @@ namespace ProductService.DataAccessLayer
                 using (IDbTransaction tran = connection.BeginTransaction()) {
                     try {
                         using (SqlCommand cmdInsertBook = connection.CreateCommand()) {
-                            cmdInsertBook.CommandText = "INSERT INTO Booking(EscapeRoomID, BookingTime, BDate, AmountOfPeople, UserName, EmployeeID) VALUES(@EscapeRoomID, @BookingTime, @BDate, @AmountOfPeople, @UserName, @EmployeeID)";
+                            cmdInsertBook.CommandText = "INSERT INTO Booking(EscapeRoomID, BookingTime," +
+                                " BDate, AmountOfPeople, UserName, EmployeeID)" +
+                                " VALUES(@EscapeRoomID, @BookingTime, @BDate, @AmountOfPeople, @UserName, @EmployeeID)";
                             cmdInsertBook.Transaction = tran as SqlTransaction;
                             cmdInsertBook.Parameters.AddWithValue("EscapeRoomID", book.er.escapeRoomID);
                             cmdInsertBook.Parameters.AddWithValue("BookingTime", book.bookingTime);

@@ -33,13 +33,11 @@ namespace ProductService.ControlLayer {
             DBER.Delete(ER_ID);
         }
 
-        public List<TimeSpan> FreeTimes(int ER_ID, DateTime Bdate) {
-            List<TimeSpan> Times = new List<TimeSpan>();
+        public List<TimeSpan> FreeTimes(int ER_ID, DateTime Bdate) {           
             List<Booking> bkl = new List<Booking>();
             EscapeRoom est = new EscapeRoom();
             BookingController bc = new BookingController();
-            bkl = bc.CheckBooking(ER_ID, Bdate);
-            Times = est.AvalibleTimes;
+            bkl = bc.CheckBooking(ER_ID, Bdate);            
             TimeSpan time1, time2, time3, time4, time5;
             time1 = new TimeSpan(16, 00, 00);
             time2 = new TimeSpan(18, 00, 00);
@@ -53,8 +51,6 @@ namespace ProductService.ControlLayer {
                 time4,
                 time5
             };
-
-
             foreach (var time in bkl) {
 
                 if (time.bookingTime == time1){
@@ -73,9 +69,7 @@ namespace ProductService.ControlLayer {
                     newTimes.Remove(time5);
                 }
                 else {
-
                 }
-
             }
             return newTimes;
         }
