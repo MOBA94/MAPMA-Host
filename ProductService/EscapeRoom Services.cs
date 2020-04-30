@@ -35,5 +35,10 @@ namespace ProductService {
             EscapeRoomController EscCon = new EscapeRoomController();
             EscCon.DeleteEscapeRoom(ER_ID);
         }
+
+        public List<TimeSpan> FreeTimes(int ER_ID, DateTime Bdate) {
+            EscapeRoomController EscCon = new EscapeRoomController();
+            return EscCon.FreeTimes(ER_ID,Bdate);
+        }
     }
 }

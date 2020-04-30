@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ModelLayer;
 using ProductService.DataAccessLayer;
+using ModelLayer;
 
 namespace ProductService.ControlLayer {
     class EscapeRoomController {
@@ -32,7 +33,52 @@ namespace ProductService.ControlLayer {
             DBER.Delete(ER_ID);
         }
 
-        
+        public List<TimeSpan> FreeTimes(int ER_ID, DateTime Bdate) {
+            List<TimeSpan> Times = new List<TimeSpan>();
+            List<Booking> bkl = new List<Booking>();
+            EscapeRoom est = new EscapeRoom();
+            BookingController bc = new BookingController();
+            bkl = bc.CheckBooking(ER_ID, Bdate);
+            Times = est.AvalibleTimes;
+            TimeSpan time1, time2, time3, time4, time5;
+            time1 = new TimeSpan(16, 00, 00);
+            time2 = new TimeSpan(18, 00, 00);
+            time3 = new TimeSpan(20, 00, 00);
+            time4 = new TimeSpan(22, 00, 00);
+            time5 = new TimeSpan(00, 00, 00);
+            List<TimeSpan> newTimes = new List<TimeSpan>(){
+                time1,
+                time2,
+                time3,
+                time4,
+                time5
+            };
+
+
+            foreach (var time in bkl) {
+
+                if (time.bookingTime == time1){
+                    newTimes.Remove(time1);
+                }
+                else if(time.bookingTime == time2) {
+                    newTimes.Remove(time2);
+                }
+                else if (time.bookingTime == time3) {
+                    newTimes.Remove(time3);
+                }
+                else if (time.bookingTime == time4) {
+                    newTimes.Remove(time4);
+                }
+                else if (time.bookingTime == time5) {
+                    newTimes.Remove(time5);
+                }
+                else {
+
+                }
+
+            }
+            return newTimes;
+        }
 
     }
 }

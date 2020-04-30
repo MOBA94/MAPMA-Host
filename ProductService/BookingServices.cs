@@ -10,11 +10,11 @@ namespace ProductService {
    [ServiceBehavior(Namespace = "http://localhost:8734/Design_Time_Addresses/Booking")]
     public class BookingServices : IBookingServices {
 
-        public void Create(int EmpID, string username, int ER_ID, TimeSpan bookTime, int AOP, DateTime Bdate) {
+        public int Create(int EmpID, string username, int ER_ID, TimeSpan bookTime, int AOP, DateTime Bdate) {
 
             BookingController BCon = new BookingController();
 
-            BCon.Create(EmpID, username, ER_ID, bookTime, AOP, Bdate);
+            return BCon.Create(EmpID, username, ER_ID, bookTime, AOP, Bdate);
         }
 
         public void Delete(int EscID, string username, int ER_ID, TimeSpan bookTime, int AOP, DateTime Bdate) {
