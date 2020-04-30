@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ModelLayer;
 using System.Data.SqlClient;
+using System.Data;
 
 namespace ProductService.DataAccessLayer
 {
@@ -54,19 +55,30 @@ namespace ProductService.DataAccessLayer
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 connection.Open();
-                using (SqlCommand cmdInsertBook = connection.CreateCommand())
-                {
-                    cmdInsertBook.CommandText = "INSERT INTO Booking(EscapeRoomID, BookingTime, BDate, AmountOfPeople, UserName, EmployeeID) VALUES(@EscapeRoomID, @BookingTime, @BDate, @AmountOfPeople, @UserName, @EmployeeID)";
-                    cmdInsertBook.Parameters.AddWithValue("EscapeRoomID", book.er.escapeRoomID);
-                    cmdInsertBook.Parameters.AddWithValue("BookingTime", book.bookingTime);
-                    cmdInsertBook.Parameters.AddWithValue("BDate", book.date);
-                    cmdInsertBook.Parameters.AddWithValue("AmountOfPeople", book.amountOfPeople);
-                    cmdInsertBook.Parameters.AddWithValue("UserName", book.cus.username);
-                    cmdInsertBook.Parameters.AddWithValue("EmployeeID", book.emp.employeeID);
-                    cmdInsertBook.ExecuteNonQuery();
-                }
+                using (IDbTransaction tran = connection.BeginTransaction()) {
+                    try {
+                        using (SqlCommand cmdInsertBook = connection.CreateCommand()) {
+                            cmdInsertBook.CommandText = "INSERT INTO Booking(EscapeRoomID, BookingTime, BDate, AmountOfPeople, UserName, EmployeeID) VALUES(@EscapeRoomID, @BookingTime, @BDate, @AmountOfPeople, @UserName, @EmployeeID)";
+                            cmdInsertBook.Transaction = tran as SqlTransaction;
+                            cmdInsertBook.Parameters.AddWithValue("EscapeRoomID", book.er.escapeRoomID);
+                            cmdInsertBook.Parameters.AddWithValue("BookingTime", book.bookingTime);
+                            cmdInsertBook.Parameters.AddWithValue("BDate", book.date);
+                            cmdInsertBook.Parameters.AddWithValue("AmountOfPeople", book.amountOfPeople);
+                            cmdInsertBook.Parameters.AddWithValue("UserName", book.cus.username);
+                            cmdInsertBook.Parameters.AddWithValue("EmployeeID", book.emp.employeeID);
+                            cmdInsertBook.ExecuteNonQuery();
+                            tran.Commit();
+                        }
+                    }
+                    catch (Exception e) {
+                        tran.Rollback();
+                        Console.WriteLine(e);
+                        Console.ReadLine();
+                    }
+                }          
             }
         }
+
         public void Delete(Booking book)
         {
 

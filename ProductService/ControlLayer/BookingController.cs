@@ -26,17 +26,22 @@ namespace ProductService.ControlLayer {
                 return 0;
             }
             else {
-                Booking tempBook = new Booking {
-                    emp = ECon.Get(EmpID),
-                    cus = CusCon.Get(username),
-                    er = ERCon.GetForOwner(ER_ID)
-                };
-                tempBook.bookingTime = bookTime;
-                tempBook.amountOfPeople = AOP;
-                tempBook.date = Bdate;
+                if (checklist.Contains(bookTime)) {
+                            Booking tempBook = new Booking {
+                            emp = ECon.Get(EmpID),
+                            cus = CusCon.Get(username),
+                            er = ERCon.GetForOwner(ER_ID)
+                        };
+                        tempBook.bookingTime = bookTime;
+                        tempBook.amountOfPeople = AOP;
+                        tempBook.date = Bdate;
 
-                dbBook.Create(tempBook);
-                return 1;
+                        dbBook.Create(tempBook);
+                        return 1;
+                    }
+                    else {
+                        return 0;
+                    }
             }
             
         }
