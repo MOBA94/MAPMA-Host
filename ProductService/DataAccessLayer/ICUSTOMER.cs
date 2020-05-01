@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace ProductService.DataAccessLayer {
     interface ICUSTOMER<T> {
 
-        void Create(T entity);
+        void Register(T entity);
         T Get(string username);
         IEnumerable<T> GetAll();
         void Update(T entity);

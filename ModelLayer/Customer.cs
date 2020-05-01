@@ -25,6 +25,11 @@ namespace ModelLayer {
             get; set;
         }
 
+        [DataMember]
+        public string salt {
+            get; set;
+        }
+
         public Customer(int customerNo, string password, string username, string FirstName, string LastName, string Mail, string Phone): base (FirstName, LastName, Mail, Phone) {
             this.customerNo = customerNo;
             this.password = password;
