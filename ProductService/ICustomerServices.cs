@@ -14,7 +14,7 @@ namespace ProductService {
         Customer Get(string username);
 
         [OperationContract]
-        void Register( Customer cus, string password );
+        int Register( Customer cus, string password );
         [OperationContract]
         Customer Login ( string inputPassword, string username );
     }

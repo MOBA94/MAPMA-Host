@@ -25,10 +25,10 @@ namespace ProductService {
             return CusCon.Login(inputPassword, username);
         }
 
-        public void Register ( Customer cus, string password )
+        public int Register ( Customer cus, string password )
         {
             CustomerController CusCon = new CustomerController();
-            CusCon.Register(cus,password);
+            return CusCon.Register(cus,password);
         }
     }
 }

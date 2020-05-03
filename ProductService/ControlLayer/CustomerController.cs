@@ -45,10 +45,25 @@ namespace ProductService.ControlLayer {
             }
         }
 
-        public void Register(Customer cus, string password) {
-            cus.salt = CreateSalt();
-            cus.password = PasswordHashAndSalt(password, cus.salt);
-            DBcus.Register(cus);
+        public int Register(Customer cus, string password) {
+            int i;
+
+            if (Get(cus.username).username != null) {
+                i = 0;
+            }
+            else {
+                try {
+                    cus.salt = CreateSalt();
+                    cus.password = PasswordHashAndSalt(password, cus.salt);
+                    DBcus.Register(cus);
+                    i = 1;
+                }
+                catch (Exception e) {
+                    i = 2;
+                }
+            }
+            
+            return i;
         }
 
         public static string CreateSalt() {
