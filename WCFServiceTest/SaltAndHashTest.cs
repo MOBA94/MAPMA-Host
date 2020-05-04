@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Security.Cryptography.X509Certificates;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ProductService.ControlLayer;
 
 namespace WCFServiceTest
 {
@@ -11,21 +12,20 @@ namespace WCFServiceTest
         public void TestMethod1 ( )
         {
             //Arrange
+            CustomerController cc = new CustomerController();
             string password = "gruppe2ErSeje";
-            string salt;
 
 
 
 
                 //Act
-                salt = ProductService.ControlLayer.CustomerController.CreateSalt();
-            string hashedPassword = ProductService.ControlLayer.CustomerController.PasswordHashAndSalt(password, salt);
+            string hashedPassword = cc.PasswordHashAndSalt(password);
             
 
 
             //Assert
             Assert.AreNotEqual(hashedPassword, password);
-            Assert.IsTrue(ProductService.ControlLayer.CustomerController.VerifyHashedPassword(hashedPassword, password, salt));
+            Assert.IsTrue(ProductService.ControlLayer.CustomerController.VerifyHashedPassword(hashedPassword, password));
            
         }
     }
