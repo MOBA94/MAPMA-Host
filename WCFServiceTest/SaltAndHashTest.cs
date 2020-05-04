@@ -18,14 +18,14 @@ namespace WCFServiceTest
 
 
                 //Act
-                salt = ProductService.DataAccessLayer.DBCustomer.CreateSalt();
-            string hashedPassword = ProductService.DataAccessLayer.DBCustomer.PasswordHashAndSalt(password, salt);
+                salt = ProductService.ControlLayer.CustomerController.CreateSalt();
+            string hashedPassword = ProductService.ControlLayer.CustomerController.PasswordHashAndSalt(password, salt);
             
 
 
             //Assert
             Assert.AreNotEqual(hashedPassword, password);
-            Assert.IsTrue(ProductService.DataAccessLayer.DBCustomer.VerifyHashedPassword(hashedPassword, password, salt));
+            Assert.IsTrue(ProductService.ControlLayer.CustomerController.VerifyHashedPassword(hashedPassword, password, salt));
            
         }
     }

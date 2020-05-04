@@ -12,5 +12,12 @@ namespace ProductService {
 
         [OperationContract]
         Customer Get(string username);
+
+        [OperationContract]
+        int Register( Customer cus, string password );
+        [OperationContract]
+        Customer Login ( string inputPassword, string username );
     }
+
+
 }

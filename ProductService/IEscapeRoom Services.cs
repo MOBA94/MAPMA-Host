@@ -22,5 +22,8 @@ namespace ProductService {
 
         [OperationContract]
         void DeleteEscapeRoom ( int ER_ID );
+
+        [OperationContract]
+        List<TimeSpan> FreeTimes(int ER_ID, DateTime Bdate);
     }
 }

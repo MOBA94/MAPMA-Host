@@ -18,5 +18,17 @@ namespace ProductService {
 
             return CusCon.Get(username);
         }
+
+        public Customer Login ( string inputPassword, string username )
+        {
+            CustomerController CusCon = new CustomerController();
+            return CusCon.Login(inputPassword, username);
+        }
+
+        public int Register ( Customer cus, string password )
+        {
+            CustomerController CusCon = new CustomerController();
+            return CusCon.Register(cus,password);
+        }
     }
 }
