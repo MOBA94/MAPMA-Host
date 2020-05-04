@@ -30,15 +30,14 @@ namespace ProductService.DataAccessLayer
                     {
                         using (SqlCommand cmdRegister = connection.CreateCommand()) {
 
-                    cmdRegister.CommandText = "INSERT INTO Customer(FirstName, LastName, Mail, Phone, UserName, Salt, CPassword)"  +
-                         "VALUES(@FirstName, @LastName, @Mail, @Phone, @UserName, @Salt, @CPassword)";
+                    cmdRegister.CommandText = "INSERT INTO Customer(FirstName, LastName, Mail, Phone, UserName, CPassword)"  +
+                         "VALUES(@FirstName, @LastName, @Mail, @Phone, @UserName, @CPassword)";
                     cmdRegister.Transaction = tran as SqlTransaction;
                     cmdRegister.Parameters.AddWithValue("FirstName",cus.firstName);
                     cmdRegister.Parameters.AddWithValue("LastName",cus.lastName);
                     cmdRegister.Parameters.AddWithValue("Mail",cus.mail);
                     cmdRegister.Parameters.AddWithValue("Phone",cus.phone);
                     cmdRegister.Parameters.AddWithValue("UserName",cus.username);
-                    cmdRegister.Parameters.AddWithValue("Salt",cus.salt);
                     cmdRegister.Parameters.AddWithValue("CPassword",cus.password);
                     cmdRegister.ExecuteNonQuery();
                     tran.Commit();
@@ -67,7 +66,7 @@ namespace ProductService.DataAccessLayer
                 connection.Open();
                 using (SqlCommand cmd = connection.CreateCommand())
                 {
-                    cmd.CommandText = "SELECT FirstName, LastName, Mail, Phone, CustomerNo, UserName, Salt From Customer WHERE UserName=@UserName";
+                    cmd.CommandText = "SELECT FirstName, LastName, Mail, Phone, CustomerNo, UserName, CPassword From Customer WHERE UserName=@UserName";
                     cmd.Parameters.AddWithValue("UserName", username);
                     SqlDataReader reader = cmd.ExecuteReader();
                     if (reader.Read())
@@ -78,7 +77,7 @@ namespace ProductService.DataAccessLayer
                         cus.phone = reader.GetString(reader.GetOrdinal("Phone"));
                         cus.customerNo = reader.GetInt32(reader.GetOrdinal("CustomerNo"));
                         cus.username = reader.GetString(reader.GetOrdinal("UserName"));
-                        cus.salt = reader.GetString(reader.GetOrdinal("Salt"));
+                        cus.password = reader.GetString(reader.GetOrdinal("CPassword"));
                     }
                 }
             }
