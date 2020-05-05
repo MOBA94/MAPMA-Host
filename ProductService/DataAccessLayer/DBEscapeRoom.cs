@@ -140,7 +140,7 @@ namespace ProductService.DataAccessLayer {
         public void Update(EscapeRoom entity) {
 
 
-            throw new NotImplementedException();
+            
         }
     }
 }
