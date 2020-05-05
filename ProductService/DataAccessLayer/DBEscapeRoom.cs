@@ -82,7 +82,7 @@ namespace ProductService.DataAccessLayer {
                         escapeRoom.description = reader.GetString(reader.GetOrdinal("EsDescription"));
                         escapeRoom.rating = reader.GetDecimal(reader.GetOrdinal("Rating"));
                         escapeRoom.emp = DBemp.Get(reader.GetInt32(reader.GetOrdinal("EmployeeID")));
-                        escapeRoom.Image = (byte[]) reader.GetBytes(reader.GetOrdinal("Image"));
+                        escapeRoom.Image =(byte[]) reader.GetSqlBinary(reader.GetOrdinal("Image"));
                        
 
                         int i = 0;
