@@ -15,18 +15,19 @@ namespace ProductService.DataAccessLayer {
             _connectionString = DB.DbConnectionString;
         }
 
-        public void Create (string name, string description, decimal maxClearTime, decimal cleanTime, decimal price, decimal rating, int empId)
+        public void Create (string name, string description, decimal maxClearTime, decimal cleanTime, decimal price, decimal rating, int empId, byte[] img )
         {
             EscapeRoom escapeRoom = new EscapeRoom();
             String tempCheck;
             DBEmployee DBemp = new DBEmployee();
+            
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 connection.Open();
                 using (SqlCommand cmdReadERs = connection.CreateCommand()) {
-                        cmdReadERs.CommandText  =  "INSERT INTO EscapeRoom(EsName, EsDescription, MaxClearTime, CleanTime, Price, Rating, EmployeeID)" +
-                        "VALUES(@EsName, @EsDescription, @MaxClearTime, @CleanTime, @Price, @Rating, @EmployeeID)";
+                        cmdReadERs.CommandText  =  "INSERT INTO EscapeRoom(EsName, EsDescription, MaxClearTime, CleanTime, Price, Rating, EmployeeID,Image)" +
+                        "VALUES(@EsName, @EsDescription, @MaxClearTime, @CleanTime, @Price, @Rating, @EmployeeID, @Image)";
                     cmdReadERs.Parameters.AddWithValue("EsName", name);
                     cmdReadERs.Parameters.AddWithValue("EsDescription", description);
                     cmdReadERs.Parameters.AddWithValue("MaxClearTime", maxClearTime);
@@ -34,6 +35,10 @@ namespace ProductService.DataAccessLayer {
                     cmdReadERs.Parameters.AddWithValue("Price", price);
                     cmdReadERs.Parameters.AddWithValue("Rating", rating);
                     cmdReadERs.Parameters.AddWithValue("EmployeeId", empId);
+                    if (img != null)
+                    {
+                        cmdReadERs.Parameters.AddWithValue("Image", img);
+                    }
                     cmdReadERs.ExecuteNonQuery();
                 }
             }
@@ -77,6 +82,7 @@ namespace ProductService.DataAccessLayer {
                         escapeRoom.description = reader.GetString(reader.GetOrdinal("EsDescription"));
                         escapeRoom.rating = reader.GetDecimal(reader.GetOrdinal("Rating"));
                         escapeRoom.emp = DBemp.Get(reader.GetInt32(reader.GetOrdinal("EmployeeID")));
+                        escapeRoom.Image = (byte[]) reader.GetBytes(reader.GetOrdinal("Image"));
                        
 
                         int i = 0;

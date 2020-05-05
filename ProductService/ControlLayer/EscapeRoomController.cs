@@ -25,8 +25,16 @@ namespace ProductService.ControlLayer {
             return DBER.GetAllForOwner();
         }
 
-        public void CreateRoomOwner (string name, string description, decimal maxClearTime, decimal cleanTime, decimal price, decimal rating, int empId) {
-            DBER.Create(name, description, maxClearTime, cleanTime, price, rating, empId);
+        public void CreateRoomOwner (string name, string description, decimal maxClearTime, decimal cleanTime, decimal price, decimal rating, int empId ,byte[] img) {
+
+            if(img != null) {                
+                DBER.Create(name, description, maxClearTime, cleanTime, price, rating, empId, img);
+            }
+            else {
+                img = null;
+                DBER.Create(name, description, maxClearTime, cleanTime, price, rating, empId, img);
+            }
+           
         }
 
         public void DeleteEscapeRoom (int ER_ID){

@@ -50,6 +50,10 @@ namespace ModelLayer {
         public List<TimeSpan> AvalibleTimes {
             get; set;
         }
+        [DataMember]
+        public byte[] Image {
+            get; set;
+        }
 
         public EscapeRoom(int escapeRoomID, string name, string description, decimal maxClearTime, decimal cleanTime, decimal price) {
             this.escapeRoomID = escapeRoomID;

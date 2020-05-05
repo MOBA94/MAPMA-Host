@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace ProductService.DataAccessLayer {
     interface IESCAPEROOM <T> {
 
-        void Create(string name, string description, decimal maxClearTime, decimal cleanTime, decimal price, decimal rating, int empId);
+        void Create(string name, string description, decimal maxClearTime, decimal cleanTime, decimal price, decimal rating, int empId,byte[] img);
 
         void Delete(int id);
 
