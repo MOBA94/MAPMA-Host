@@ -17,7 +17,13 @@ namespace ProductService  {
         return EmpCon.Get(id);
     }
 
+        public IEnumerable<Employee> GetAll() {
+            EmployeeController EmpCon = new EmployeeController();
 
+            return EmpCon.getAll();
+        }
+
+        
 
     }
 }

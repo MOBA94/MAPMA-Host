@@ -49,7 +49,32 @@ namespace ProductService.DataAccessLayer
 
         public IEnumerable<Employee> GetAll ( )
         {
-            throw new NotImplementedException();
+            List<Employee> Employees = new List<Employee>();
+            Employee tempEmp;
+            String tempCheck;
+            ;
+            using (SqlConnection connection = new SqlConnection(_connectionString)) {
+                connection.Open();
+                using (SqlCommand cmdReadAllEmps = connection.CreateCommand()) {
+
+                    cmdReadAllEmps.CommandText = "SELECT Employee.*, City.* From Employee LEFT JOIN City ON Employee.Zipcode = City.Zipcode";
+                    SqlDataReader reader = cmdReadAllEmps.ExecuteReader();
+
+                    while (reader.Read()) {
+                        tempEmp = new Employee();
+                        tempEmp.address = reader.GetString(reader.GetOrdinal("Eaddress"));
+                        tempEmp.cityName = reader.GetString(reader.GetOrdinal("Cityname"));
+                        tempEmp.employeeID = reader.GetInt32(reader.GetOrdinal("EmployeeID"));
+                        tempEmp.firstName = reader.GetString(reader.GetOrdinal("FirstName"));
+                        tempEmp.lastName = reader.GetString(reader.GetOrdinal("LastName"));
+                        tempEmp.phone = reader.GetString(reader.GetOrdinal("Phone"));
+                        tempEmp.region = reader.GetString(reader.GetOrdinal("Region"));
+                        tempEmp.zipcode = reader.GetInt32(reader.GetOrdinal("Zipcode"));
+                  
+                    }
+                }
+            }
+            return Employees;
         }
 
         public void Update ( Employee entity )

@@ -40,5 +40,10 @@ namespace ProductService {
             EscapeRoomController EscCon = new EscapeRoomController();
             return EscCon.FreeTimes(ER_ID,Bdate);
         }
+
+        public void Update(string name, string description, decimal maxClearTime, decimal cleanTime, decimal price, decimal rating, int empId) {
+            EscapeRoomController EscCon = new EscapeRoomController();
+            EscCon.UpdateRoom(name, description, maxClearTime, cleanTime, price, rating, empId);
+        }
     }
 }
