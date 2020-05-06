@@ -17,5 +17,9 @@ namespace ProductService.ControlLayer {
         public Employee Get(int id) {
             return DBE.Get(id);
         }
+
+        public IEnumerable<Employee> getAll() {
+            return DBE.GetAll();
+        }
     }
 }

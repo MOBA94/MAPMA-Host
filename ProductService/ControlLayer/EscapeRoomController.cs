@@ -41,6 +41,22 @@ namespace ProductService.ControlLayer {
             DBER.Delete(ER_ID);
         }
 
+        public void UpdateRoom (string name, string description, decimal maxClearTime, decimal cleanTime, decimal price, decimal rating, int empId, int escId) {
+            EmployeeController ec = new EmployeeController();
+            EscapeRoom ER = new EscapeRoom() {
+                escapeRoomID = escId,
+                name = name,
+                description = description,
+                maxClearTime = maxClearTime,
+                cleanTime = cleanTime,
+                price = price,
+                rating = rating,
+                emp = ec.Get(empId)
+            };
+            
+            DBER.Update(ER);
+        }
+
         public List<TimeSpan> FreeTimes(int ER_ID, DateTime Bdate) {           
             List<Booking> bkl = new List<Booking>();
             EscapeRoom est = new EscapeRoom();

@@ -13,5 +13,8 @@ namespace ProductService {
 
         [OperationContract]
         Employee Get(int id);
+
+        [OperationContract]
+        IEnumerable<Employee> GetAll();
     }
 }
