@@ -138,14 +138,15 @@ namespace ProductService.DataAccessLayer {
                 connection.Open();
                 using (SqlCommand cmdUpdateRoom = connection.CreateCommand()) {
 
-                    cmdUpdateRoom.CommandText = "UPDATE EscapeRoom SET EsName = @EsName, EsDescription = @EsDescription, Price = @Price, MaxClearTime = @MaxClearTime, CleanTime = @CleanTime, Rating = @Rating, EmployeeID = @EmployeeID  WHERE EscapeRoomID = EscapeRoomID";
+                    cmdUpdateRoom.CommandText = "UPDATE EscapeRoom SET EsName = @EsName, EsDescription = @EsDescription, Price = @Price, MaxClearTime = @MaxClearTime, CleanTime = @CleanTime, Rating = @Rating, EmployeeID = @EmployeeID  WHERE EscapeRoomID = @EscapeRoomID";
                     cmdUpdateRoom.Parameters.AddWithValue("EsName", ER.name);
                     cmdUpdateRoom.Parameters.AddWithValue("EsDescription", ER.description);
                     cmdUpdateRoom.Parameters.AddWithValue("Price", ER.price);
                     cmdUpdateRoom.Parameters.AddWithValue("MaxClearTime", ER.maxClearTime);
                     cmdUpdateRoom.Parameters.AddWithValue("CleanTime", ER.cleanTime);
                     cmdUpdateRoom.Parameters.AddWithValue("Rating", ER.rating);
-                    cmdUpdateRoom.Parameters.AddWithValue("EmployeeID", ER.emp.employeeID); ;
+                    cmdUpdateRoom.Parameters.AddWithValue("EmployeeID", ER.emp.employeeID);
+                    cmdUpdateRoom.Parameters.AddWithValue("EscapeRoomID", ER.escapeRoomID);
                     cmdUpdateRoom.ExecuteNonQuery();
 
                 }

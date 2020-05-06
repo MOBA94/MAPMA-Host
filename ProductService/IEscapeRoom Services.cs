@@ -27,6 +27,6 @@ namespace ProductService {
         List<TimeSpan> FreeTimes(int ER_ID, DateTime Bdate);
 
         [OperationContract]
-        void Update(string name, string description, decimal maxClearTime, decimal cleanTime, decimal price, decimal rating, int empId);
+        void Update(string name, string description, decimal maxClearTime, decimal cleanTime, decimal price, decimal rating, int empId, int EscId);
     }
 }
