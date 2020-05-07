@@ -25,9 +25,9 @@ namespace ProductService {
             return EscCon.GetAllForOwner();
         }
 
-        public void CreateEscapeRoom(string name, string description, decimal maxClearTime, decimal cleanTime, decimal price, decimal rating, int empId) {
+        public void CreateEscapeRoom(string name, string description, decimal maxClearTime, decimal cleanTime, decimal price, decimal rating, int empId, byte[] img) {
             EscapeRoomController EscCon = new EscapeRoomController();
-            EscCon.CreateRoomOwner(name, description, maxClearTime, cleanTime, price, rating, empId);
+            EscCon.CreateRoomOwner(name, description, maxClearTime, cleanTime, price, rating, empId, img);
         }
 
         public void DeleteEscapeRoom ( int ER_ID )
@@ -39,6 +39,11 @@ namespace ProductService {
         public List<TimeSpan> FreeTimes(int ER_ID, DateTime Bdate) {
             EscapeRoomController EscCon = new EscapeRoomController();
             return EscCon.FreeTimes(ER_ID,Bdate);
+        }
+
+        public void Update(string name, string description, decimal maxClearTime, decimal cleanTime, decimal price, decimal rating, int empId, int EscId) {
+            EscapeRoomController EscCon = new EscapeRoomController();
+            EscCon.UpdateRoom(name, description, maxClearTime, cleanTime, price, rating, empId, EscId);
         }
     }
 }

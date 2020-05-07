@@ -33,13 +33,19 @@ namespace ProductService.DataAccessLayer
             {
                 connection.Open();
                 using (SqlCommand cmd = connection.CreateCommand()) {
-                    cmd.CommandText = "SELECT FirstName, EmployeeId, LastName FROM Employee WHERE EmployeeId = @EmployeeId";
+                    cmd.CommandText = "SELECT * FROM Employee LEFT JOIN City ON Employee.Zipcode = City.Zipcode WHERE EmployeeId = @EmployeeId";
                     cmd.Parameters.AddWithValue("EmployeeId", id);
                     SqlDataReader reader = cmd.ExecuteReader();
                     if (reader.Read()) {
-                        employee.employeeID = reader.GetInt32(reader.GetOrdinal("EmployeeId"));
+                        employee.address = reader.GetString(reader.GetOrdinal("EAddress"));
+                        employee.cityName = reader.GetString(reader.GetOrdinal("CityName"));
+                        employee.employeeID = reader.GetInt32(reader.GetOrdinal("EmployeeID"));
                         employee.firstName = reader.GetString(reader.GetOrdinal("FirstName"));
                         employee.lastName = reader.GetString(reader.GetOrdinal("LastName"));
+                        employee.phone = reader.GetString(reader.GetOrdinal("Phone"));
+                        employee.region = reader.GetString(reader.GetOrdinal("Region"));
+                        employee.zipcode = reader.GetInt32(reader.GetOrdinal("Zipcode"));
+                        employee.mail = reader.GetString(reader.GetOrdinal("Mail"));
                     }
                 }
             }
@@ -49,7 +55,34 @@ namespace ProductService.DataAccessLayer
 
         public IEnumerable<Employee> GetAll ( )
         {
-            throw new NotImplementedException();
+            List<Employee> Employees = new List<Employee>();
+            Employee tempEmp;
+            ;
+            using (SqlConnection connection = new SqlConnection(_connectionString)) {
+                connection.Open();
+                using (SqlCommand cmdReadAllEmps = connection.CreateCommand()) {
+
+                    cmdReadAllEmps.CommandText = "SELECT Employee.*, City.* From Employee LEFT JOIN City ON Employee.Zipcode = City.Zipcode";
+                    SqlDataReader reader = cmdReadAllEmps.ExecuteReader();
+
+                    while (reader.Read()) {
+                        tempEmp = new Employee();
+                        tempEmp.address = reader.GetString(reader.GetOrdinal("EAddress"));
+                        tempEmp.cityName = reader.GetString(reader.GetOrdinal("CityName"));
+                        tempEmp.employeeID = reader.GetInt32(reader.GetOrdinal("EmployeeID"));
+                        tempEmp.firstName = reader.GetString(reader.GetOrdinal("FirstName"));
+                        tempEmp.lastName = reader.GetString(reader.GetOrdinal("LastName"));
+                        tempEmp.phone = reader.GetString(reader.GetOrdinal("Phone"));
+                        tempEmp.region = reader.GetString(reader.GetOrdinal("Region"));
+                        tempEmp.zipcode = reader.GetInt32(reader.GetOrdinal("Zipcode"));
+                        tempEmp.mail = reader.GetString(reader.GetOrdinal("Mail"));
+
+                        Employees.Add(tempEmp);
+
+                    }
+                }
+            }
+            return Employees;
         }
 
         public void Update ( Employee entity )

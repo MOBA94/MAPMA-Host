@@ -28,9 +28,10 @@ namespace WCFServiceTest
             Es1.price = 1200;
             Es1.rating = 0;
             Es1.emp = Em1;
+            Es1.Image = null;
 
             //Act
-            ess.CreateEscapeRoom(Es1.name, Es1.description, Es1.maxClearTime, Es1.cleanTime, Es1.price, Es1.rating, Es1.emp.employeeID);
+            ess.CreateEscapeRoom(Es1.name, Es1.description, Es1.maxClearTime, Es1.cleanTime, Es1.price, Es1.rating, Es1.emp.employeeID, Es1.Image);
 
             //Assert
             List<ModelLayer.EscapeRoom> escapeRooms = new List<ModelLayer.EscapeRoom>();

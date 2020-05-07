@@ -18,12 +18,15 @@ namespace ProductService {
         IEnumerable<EscapeRoom> GetAllForOwner();
 
         [OperationContract]
-        void CreateEscapeRoom ( string name, string description, decimal maxClearTime, decimal cleanTime, decimal price, decimal rating, int empId );
+        void CreateEscapeRoom ( string name, string description, decimal maxClearTime, decimal cleanTime, decimal price, decimal rating, int empId, byte[] img );
 
         [OperationContract]
         void DeleteEscapeRoom ( int ER_ID );
 
         [OperationContract]
         List<TimeSpan> FreeTimes(int ER_ID, DateTime Bdate);
+
+        [OperationContract]
+        void Update(string name, string description, decimal maxClearTime, decimal cleanTime, decimal price, decimal rating, int empId, int EscId);
     }
 }
