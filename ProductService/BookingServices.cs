@@ -35,6 +35,11 @@ namespace ProductService {
             return bookCon.GetAll();
         }
 
+        public void Update(int EmpID, string username, int ER_ID, TimeSpan bookTime, int AOP, DateTime Bdate, int bookId) {
+            BookingController bookCon = new BookingController();
+            bookCon.Update(EmpID, username, ER_ID, bookTime, AOP, Bdate, bookId);
+        }
+
         public IEnumerable<Booking> GetAllFromUser(string username) {
             BookingController bookCon = new BookingController();
 

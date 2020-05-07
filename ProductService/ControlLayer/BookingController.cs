@@ -60,6 +60,22 @@ namespace ProductService.ControlLayer {
             dbBook.Delete(tempBook);
         }
 
+        public void Update(int EmpID, string username, int ER_ID, TimeSpan bookTime, int AOP, DateTime Bdate, int bookId)
+        {
+            Booking bk = new Booking()
+            {
+                emp = ECon.Get(EmpID),
+                amountOfPeople = AOP,
+                bookingTime = bookTime,
+                cus = CusCon.Get(username),
+                date = Bdate,
+                er = ERCon.GetForOwner(ER_ID),
+                Id = bookId
+            };
+
+            dbBook.Update(bk);
+        }
+
         public Booking Get(int EscID, string username, DateTime Bdate) {
             return dbBook.Get(EscID, username, Bdate);
         }

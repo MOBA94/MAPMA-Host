@@ -9,20 +9,19 @@ using System.Data;
 
 namespace ProductService.DataAccessLayer
 {
-    class DBBooking : IBOOKING<Booking>
-    {
+    class DBBooking : IBOOKING<Booking> {
 
         private string _connectionString;
 
-        public DBBooking() {
+        public DBBooking ( ) {
             _connectionString = DB.DbConnectionString;
         }
 
-        public List<Booking> CheckBooking(int EscID, DateTime Bdate) {
+        public List<Booking> CheckBooking ( int EscID, DateTime Bdate ) {
             Booking TempBook;
-           List<Booking> book = new List<Booking>();            
+             List<Booking> book = new List<Booking>();
             DBEscapeRoom dber = new DBEscapeRoom();
-            DBEmployee dbemp = new DBEmployee();            
+            DBEmployee dbemp = new DBEmployee();
 
             using (SqlConnection connection = new SqlConnection(_connectionString)) {
                 connection.Open();
@@ -40,16 +39,14 @@ namespace ProductService.DataAccessLayer
                         TempBook.emp = dbemp.Get(reader.GetInt32(reader.GetOrdinal("EmployeeID")));
                         TempBook.er = dber.GetForOwner(EscID);
                         book.Add(TempBook);
-                    }                    
+                    }
                 }
             }
             return book;
         }
 
-        public void Create(Booking book)
-        {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
+        public void Create ( Booking book ) {
+            using (SqlConnection connection = new SqlConnection(_connectionString)) {
                 connection.Open();
                 using (IDbTransaction tran = connection.BeginTransaction()) {
                     try {
@@ -73,12 +70,11 @@ namespace ProductService.DataAccessLayer
                         Console.WriteLine(e);
                         Console.ReadLine();
                     }
-                }          
+                }
             }
         }
 
-        public void Delete(Booking book)
-        {
+        public void Delete ( Booking book ) {
 
             using (SqlConnection connection = new SqlConnection(_connectionString)) {
                 connection.Open();
@@ -94,7 +90,7 @@ namespace ProductService.DataAccessLayer
             }
         }
 
-        public Booking Get(int EscID, string username, DateTime Bdate) {
+        public Booking Get ( int EscID, string username, DateTime Bdate ) {
             Booking book = new Booking();
             DBCustomer dbcus = new DBCustomer();
             DBEscapeRoom dber = new DBEscapeRoom();
@@ -111,12 +107,12 @@ namespace ProductService.DataAccessLayer
                     if (reader.Read()) {
 
                         book.amountOfPeople = reader.GetInt32(reader.GetOrdinal("AmountOfPeople"));
-                        // kan ikke lave den om til dateTime kigger vi på når vi kommer til Get booking for owner
-                        //book.bookingTime = reader.GetDateTime(reader.GetOrdinal("BookingTime"));
+                        book.bookingTime = reader.GetTimeSpan(reader.GetOrdinal("BookingTime"));
                         book.date = reader.GetDateTime(reader.GetOrdinal("BDate"));
-                        book.cus = dbcus.Get(username);
+                        book.cus = dbcus.Get(reader.GetString(reader.GetOrdinal("UserName")));
                         book.emp = dbemp.Get(reader.GetInt32(reader.GetOrdinal("EmployeeID")));
-                        book.er = dber.GetForOwner(EscID);
+                        book.er = dber.GetForOwner(reader.GetInt32(reader.GetOrdinal("EscapeRoomID")));
+                        book.Id = reader.GetInt32(reader.GetOrdinal("BookingID"));
                     }
 
                 }
@@ -124,18 +120,16 @@ namespace ProductService.DataAccessLayer
             return book;
         }
 
-        public IEnumerable<Booking> GetAll ( ) {
+        public IEnumerable<Booking> GetAll() {
             List<Booking> books = new List<Booking>();
             Booking tempBook;
             DBCustomer dbcus = new DBCustomer();
             DBEscapeRoom dber = new DBEscapeRoom();
             DBEmployee dbemp = new DBEmployee();
 
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
+            using (SqlConnection connection = new SqlConnection(_connectionString)) {
                 connection.Open();
-                using (SqlCommand cmdGetBook = connection.CreateCommand())
-                {
+                using (SqlCommand cmdGetBook = connection.CreateCommand()) {
                     cmdGetBook.CommandText = "SELECT Booking.* FROM Booking";
                     SqlDataReader reader = cmdGetBook.ExecuteReader();
 
@@ -146,12 +140,13 @@ namespace ProductService.DataAccessLayer
                             cus = dbcus.Get(reader.GetString(reader.GetOrdinal("UserName"))),
                             date = reader.GetDateTime(reader.GetOrdinal("BDate")),
                             emp = dbemp.Get(reader.GetInt32(reader.GetOrdinal("EmployeeID"))),
-                            er = dber.GetForOwner(reader.GetInt32(reader.GetOrdinal("EscapeRoomID")))
+                            er = dber.GetForOwner(reader.GetInt32(reader.GetOrdinal("EscapeRoomID"))),
+                            Id = reader.GetInt32(reader.GetOrdinal("BookingID"))
                         };
 
                         books.Add(tempBook);
 
-                    }  
+                    }
                 }
             }
             return books;

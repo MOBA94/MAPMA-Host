@@ -24,5 +24,8 @@ namespace ProductService {
         
         [OperationContract]
         IEnumerable<Booking> GetAllFromUser(string username);
+
+        [OperationContract]
+        void Update ( int EmpID, string username, int ER_ID, TimeSpan bookTime, int AOP, DateTime Bdate, int bookId);
     }
 }
