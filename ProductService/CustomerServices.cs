@@ -23,6 +23,7 @@ namespace ProductService {
         {
             CustomerController CusCon = new CustomerController();
             return CusCon.Login(inputPassword, username);
+
         }
 
         public int Register ( Customer cus, string password )

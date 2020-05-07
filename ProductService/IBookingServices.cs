@@ -21,5 +21,8 @@ namespace ProductService {
 
         [OperationContract]
         void Delete(int EmpID, string username, int ER_ID, TimeSpan bookTime, int AOP, DateTime Bdate);
+        
+        [OperationContract]
+        IEnumerable<Booking> GetAllFromUser(string username);
     }
 }

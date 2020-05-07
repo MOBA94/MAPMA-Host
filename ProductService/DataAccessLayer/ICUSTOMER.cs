@@ -12,6 +12,7 @@ namespace ProductService.DataAccessLayer {
         IEnumerable<T> GetAll();
         void Update(T entity);
         void Delete(string username);
+        
     }
 
 }

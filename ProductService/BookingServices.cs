@@ -34,5 +34,11 @@ namespace ProductService {
 
             return bookCon.GetAll();
         }
+
+        public IEnumerable<Booking> GetAllFromUser(string username) {
+            BookingController bookCon = new BookingController();
+
+            return bookCon.GetAllFromUser(username);
+        }
     }
 }

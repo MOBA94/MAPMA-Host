@@ -68,6 +68,11 @@ namespace ProductService.ControlLayer {
             return dbBook.GetAll();
         }
 
+        public IEnumerable<Booking> GetAllFromUser(string username) {
+
+            return dbBook.GetAllFromUser(username);
+        }
+
         public void Update(Booking entity) {
             throw new NotImplementedException();
         }

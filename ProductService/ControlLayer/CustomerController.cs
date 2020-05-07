@@ -103,17 +103,20 @@ namespace ProductService.ControlLayer {
         }
 
         public static bool VerifyHashedPassword(string hashedPassword, string inputPassword) {
-            var salt = new byte[SaltByteLength];
-            var actualPasswordByteArr = new byte[DerivedKeyLength];
-            var actualSavedHashResulteByteArr = Convert.FromBase64String(hashedPassword);
+            
+                var salt = new byte[SaltByteLength];
+                var actualPasswordByteArr = new byte[DerivedKeyLength];
+                var actualSavedHashResulteByteArr = Convert.FromBase64String(hashedPassword);
 
-            var iterationCountLength = actualSavedHashResulteByteArr.Length - (salt.Length + actualPasswordByteArr.Length);
-            var iterationCountByteArr = new byte[iterationCountLength];
-            Buffer.BlockCopy(actualSavedHashResulteByteArr, 0, salt, 0, SaltByteLength);
-            Buffer.BlockCopy(actualSavedHashResulteByteArr, SaltByteLength, actualPasswordByteArr, 0, actualPasswordByteArr.Length);
-            Buffer.BlockCopy(actualSavedHashResulteByteArr, (salt.Length + actualPasswordByteArr.Length), iterationCountByteArr, 0, iterationCountLength);
-            var inputPasswordByteArr = GenerateHashValue(inputPassword, salt, BitConverter.ToInt32(iterationCountByteArr, 0));
-            return ConstantTimeCoparison(inputPasswordByteArr, actualPasswordByteArr);
+                var iterationCountLength = actualSavedHashResulteByteArr.Length - ( salt.Length + actualPasswordByteArr.Length );
+                var iterationCountByteArr = new byte[iterationCountLength];
+                Buffer.BlockCopy(actualSavedHashResulteByteArr, 0, salt, 0, SaltByteLength);
+                Buffer.BlockCopy(actualSavedHashResulteByteArr, SaltByteLength, actualPasswordByteArr, 0, actualPasswordByteArr.Length);
+                Buffer.BlockCopy(actualSavedHashResulteByteArr, ( salt.Length + actualPasswordByteArr.Length ), iterationCountByteArr, 0, iterationCountLength);
+                var inputPasswordByteArr = GenerateHashValue(inputPassword, salt, BitConverter.ToInt32(iterationCountByteArr, 0));
+                return ConstantTimeCoparison(inputPasswordByteArr, actualPasswordByteArr);
+            
+            
         }
 
         private static bool ConstantTimeCoparison(byte[] inputPassword, byte[] hashedPassword) {

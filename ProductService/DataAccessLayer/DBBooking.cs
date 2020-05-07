@@ -157,6 +157,38 @@ namespace ProductService.DataAccessLayer
             return books;
         }
 
+        public IEnumerable<Booking> GetAllFromUser(string username) {
+            List<Booking> books = new List<Booking>();
+            Booking tempBook;
+            DBCustomer dbcus = new DBCustomer();
+            DBEscapeRoom dber = new DBEscapeRoom();
+            DBEmployee dbemp = new DBEmployee();
+
+            using (SqlConnection connection = new SqlConnection(_connectionString)) {
+                connection.Open();
+                using (SqlCommand cmdGetBook = connection.CreateCommand()) {
+                    cmdGetBook.CommandText = "SELECT Booking.* FROM Booking WHERE UserName = @UserName";
+                    cmdGetBook.Parameters.AddWithValue("UserName",username);
+                    SqlDataReader reader = cmdGetBook.ExecuteReader();
+
+                    while (reader.Read()) {
+                        tempBook = new Booking() {
+                            amountOfPeople = reader.GetInt32(reader.GetOrdinal("AmountOfPeople")),
+                            bookingTime = reader.GetTimeSpan(reader.GetOrdinal("BookingTime")),
+                            cus = dbcus.Get(reader.GetString(reader.GetOrdinal("UserName"))),
+                            date = reader.GetDateTime(reader.GetOrdinal("BDate")),
+                            emp = dbemp.Get(reader.GetInt32(reader.GetOrdinal("EmployeeID"))),
+                            er = dber.GetForOwner(reader.GetInt32(reader.GetOrdinal("EscapeRoomID")))
+                        };
+
+                        books.Add(tempBook);
+
+                    }
+                }
+            }
+            return books;
+        }
+
         public void Update(Booking entity)
         {
             throw new NotImplementedException();
