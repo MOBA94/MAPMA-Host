@@ -25,6 +25,10 @@ namespace ModelLayer
         public Customer cus { get; set; }
         [DataMember]
         public Employee emp { get; set; }
+        [DataMember]
+        public int Id {
+            get; set;
+         }
 
         public Booking(int amountOfPeople, DateTime date, TimeSpan bookingTime)
         {
