@@ -163,11 +163,12 @@ namespace ProductService.DataAccessLayer
                 connection.Open();
                 using (SqlCommand cmdGetBook = connection.CreateCommand()) {
                     cmdGetBook.CommandText = "SELECT Booking.* FROM Booking WHERE UserName = @UserName";
-                    cmdGetBook.Parameters.AddWithValue("UserName",username);
+                    cmdGetBook.Parameters.AddWithValue("@UserName",username);
                     SqlDataReader reader = cmdGetBook.ExecuteReader();
 
                     while (reader.Read()) {
                         tempBook = new Booking() {
+                            Id = reader.GetInt32(reader.GetOrdinal("BookingID")),
                             amountOfPeople = reader.GetInt32(reader.GetOrdinal("AmountOfPeople")),
                             bookingTime = reader.GetTimeSpan(reader.GetOrdinal("BookingTime")),
                             cus = dbcus.Get(reader.GetString(reader.GetOrdinal("UserName"))),

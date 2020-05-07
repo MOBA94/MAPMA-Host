@@ -59,6 +59,17 @@ namespace ProductService.ControlLayer {
 
             dbBook.Delete(tempBook);
         }
+        public void DeleteWeb(string username, int ER_ID, TimeSpan bookTime, DateTime Bdate) {
+
+            Booking tempBook = new Booking {                
+                cus = CusCon.Get(username),
+                er = ERCon.GetForOwner(ER_ID),                
+                bookingTime = bookTime,
+                date = Bdate
+            };
+
+            dbBook.Delete(tempBook);
+        }
 
         public void Update(int EmpID, string username, int ER_ID, TimeSpan bookTime, int AOP, DateTime Bdate, int bookId)
         {

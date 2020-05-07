@@ -27,5 +27,8 @@ namespace ProductService {
 
         [OperationContract]
         void Update ( int EmpID, string username, int ER_ID, TimeSpan bookTime, int AOP, DateTime Bdate, int bookId);
+
+        [OperationContract]
+        void Deleteweb(string username, int ER_ID, TimeSpan bookTime, DateTime Bdate);
     }
 }

@@ -22,6 +22,11 @@ namespace ProductService {
             BCon.Delete(EscID, username, ER_ID, bookTime, AOP, Bdate);
         }
 
+        public void Deleteweb(string username, int ER_ID, TimeSpan bookTime , DateTime Bdate) {
+            BookingController BCon = new BookingController();
+            BCon.DeleteWeb(username, ER_ID, bookTime, Bdate);
+        }
+
         public Booking Get(int EmpID, string username, DateTime Bdate) {
             BookingController BCon = new BookingController();
 
