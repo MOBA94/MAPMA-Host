@@ -14,5 +14,6 @@ namespace ProductService.DataAccessLayer {
         void Update(T entity);
         void Delete(Booking book);
         IEnumerable<T> GetAllFromUser(string username);
+        IEnumerable<Booking> GetAllOneRoom ( int EscId );
     }
 }

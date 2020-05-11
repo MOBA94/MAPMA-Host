@@ -30,5 +30,8 @@ namespace ProductService {
 
         [OperationContract]
         void Deleteweb(string username, int ER_ID, TimeSpan bookTime, DateTime Bdate);
+
+        [OperationContract]
+        IEnumerable<Booking> GetAllOneRoom ( int EscId );
     }
 }

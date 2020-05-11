@@ -100,6 +100,10 @@ namespace ProductService.ControlLayer {
             return dbBook.GetAllFromUser(username);
         }
 
+        public IEnumerable<Booking> GetAllOneRoom(int EscId) {
+            return dbBook.GetAllOneRoom(EscId);
+        }
+
         public List<Booking> CheckBooking(int EscID, DateTime Bdate) {
             return dbBook.CheckBooking(EscID, Bdate);
         }

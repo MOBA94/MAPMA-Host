@@ -50,5 +50,11 @@ namespace ProductService {
 
             return bookCon.GetAllFromUser(username);
         }
+
+        public IEnumerable<Booking> GetAllOneRoom(int EscId) {
+            BookingController bookCon = new BookingController();
+
+            return bookCon.GetAllOneRoom(EscId);
+        }
     }
 }
