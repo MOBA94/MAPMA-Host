@@ -7,31 +7,36 @@ using ModelLayer;
 using System.Data.SqlClient;
 using System.Data;
 
-namespace ProductService.DataAccessLayer
-{
-    class DBBooking : IBOOKING<Booking> {
+namespace ProductService.DataAccessLayer {
+    class DBBooking : IBOOKING<Booking>
+    {
 
         private string _connectionString;
 
-        public DBBooking ( ) {
+        public DBBooking()
+        {
             _connectionString = DB.DbConnectionString;
         }
 
-        public List<Booking> CheckBooking ( int EscID, DateTime Bdate ) {
+        public List<Booking> CheckBooking(int EscID, DateTime Bdate)
+        {
             Booking TempBook;
-             List<Booking> book = new List<Booking>();
+            List<Booking> book = new List<Booking>();
             DBEscapeRoom dber = new DBEscapeRoom();
             DBEmployee dbemp = new DBEmployee();
 
-            using (SqlConnection connection = new SqlConnection(_connectionString)) {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
                 connection.Open();
-                using (SqlCommand cmdGetBook = connection.CreateCommand()) {
+                using (SqlCommand cmdGetBook = connection.CreateCommand())
+                {
                     cmdGetBook.CommandText = "SELECT Booking.* FROM Booking WHERE EscapeRoomID =@EscapeRoomID AND BDate =@BDate";
                     //skal være et lop og en excutebatch tror jeg. skal også retunere et list af bookings
                     cmdGetBook.Parameters.AddWithValue("@EscapeRoomID", EscID);
                     cmdGetBook.Parameters.AddWithValue("@BDate", Bdate);
                     SqlDataReader reader = cmdGetBook.ExecuteReader();
-                    while (reader.Read()) {
+                    while (reader.Read())
+                    {
                         TempBook = new Booking();
                         TempBook.amountOfPeople = reader.GetInt32(reader.GetOrdinal("AmountOfPeople"));
                         TempBook.bookingTime = reader.GetTimeSpan(reader.GetOrdinal("BookingTime"));
@@ -45,12 +50,17 @@ namespace ProductService.DataAccessLayer
             return book;
         }
 
-        public void Create ( Booking book ) {
-            using (SqlConnection connection = new SqlConnection(_connectionString)) {
+        public void Create(Booking book)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
                 connection.Open();
-                using (IDbTransaction tran = connection.BeginTransaction()) {
-                    try {
-                        using (SqlCommand cmdInsertBook = connection.CreateCommand()) {
+                using (IDbTransaction tran = connection.BeginTransaction())
+                {
+                    try
+                    {
+                        using (SqlCommand cmdInsertBook = connection.CreateCommand())
+                        {
                             cmdInsertBook.CommandText = "INSERT INTO Booking(EscapeRoomID, BookingTime," +
                                 " BDate, AmountOfPeople, UserName, EmployeeID)" +
                                 " VALUES(@EscapeRoomID, @BookingTime, @BDate, @AmountOfPeople, @UserName, @EmployeeID)";
@@ -65,7 +75,8 @@ namespace ProductService.DataAccessLayer
                             tran.Commit();
                         }
                     }
-                    catch (Exception e) {
+                    catch (Exception e)
+                    {
                         tran.Rollback();
                         Console.WriteLine(e);
                         Console.ReadLine();
@@ -74,11 +85,14 @@ namespace ProductService.DataAccessLayer
             }
         }
 
-        public void Delete ( Booking book ) {
+        public void Delete(Booking book)
+        {
 
-            using (SqlConnection connection = new SqlConnection(_connectionString)) {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
                 connection.Open();
-                using (SqlCommand cmdDeleteBook = connection.CreateCommand()) {
+                using (SqlCommand cmdDeleteBook = connection.CreateCommand())
+                {
                     cmdDeleteBook.CommandText = "DELETE FROM Booking WHERE UserName =@UserName AND EscapeRoomID =@EscapeRoomID AND BDate =@BDate AND BookingTime =@BookingTime";
                     cmdDeleteBook.Parameters.AddWithValue("UserName", book.cus.username);
                     cmdDeleteBook.Parameters.AddWithValue("EscapeRoomID", book.er.escapeRoomID);
@@ -90,21 +104,25 @@ namespace ProductService.DataAccessLayer
             }
         }
 
-        public Booking Get ( int EscID, string username, DateTime Bdate ) {
+        public Booking Get(int EscID, string username, DateTime Bdate)
+        {
             Booking book = new Booking();
             DBCustomer dbcus = new DBCustomer();
             DBEscapeRoom dber = new DBEscapeRoom();
             DBEmployee dbemp = new DBEmployee();
 
-            using (SqlConnection connection = new SqlConnection(_connectionString)) {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
                 connection.Open();
-                using (SqlCommand cmdGetBook = connection.CreateCommand()) {
+                using (SqlCommand cmdGetBook = connection.CreateCommand())
+                {
                     cmdGetBook.CommandText = "SELECT Booking.* FROM Booking WHERE UserName =@UserName AND EscapeRoomID =@EscapeRoomID AND BDate =@BDate";
                     cmdGetBook.Parameters.AddWithValue("@UserName", username);
                     cmdGetBook.Parameters.AddWithValue("@EscapeRoomID", EscID);
                     cmdGetBook.Parameters.AddWithValue("@BDate", Bdate);
                     SqlDataReader reader = cmdGetBook.ExecuteReader();
-                    if (reader.Read()) {
+                    if (reader.Read())
+                    {
 
                         book.amountOfPeople = reader.GetInt32(reader.GetOrdinal("AmountOfPeople"));
                         book.bookingTime = reader.GetTimeSpan(reader.GetOrdinal("BookingTime"));
@@ -120,21 +138,26 @@ namespace ProductService.DataAccessLayer
             return book;
         }
 
-        public IEnumerable<Booking> GetAll() {
+        public IEnumerable<Booking> GetAll ( )
+        {
             List<Booking> books = new List<Booking>();
             Booking tempBook;
             DBCustomer dbcus = new DBCustomer();
             DBEscapeRoom dber = new DBEscapeRoom();
             DBEmployee dbemp = new DBEmployee();
 
-            using (SqlConnection connection = new SqlConnection(_connectionString)) {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
                 connection.Open();
-                using (SqlCommand cmdGetBook = connection.CreateCommand()) {
+                using (SqlCommand cmdGetBook = connection.CreateCommand())
+                {
                     cmdGetBook.CommandText = "SELECT Booking.* FROM Booking";
                     SqlDataReader reader = cmdGetBook.ExecuteReader();
 
-                    while (reader.Read()) {
-                        tempBook = new Booking() {
+                    while (reader.Read())
+                    {
+                        tempBook = new Booking()
+                        {
                             amountOfPeople = reader.GetInt32(reader.GetOrdinal("AmountOfPeople")),
                             bookingTime = reader.GetTimeSpan(reader.GetOrdinal("BookingTime")),
                             cus = dbcus.Get(reader.GetString(reader.GetOrdinal("UserName"))),
@@ -152,22 +175,27 @@ namespace ProductService.DataAccessLayer
             return books;
         }
 
-        public IEnumerable<Booking> GetAllFromUser(string username) {
+        public IEnumerable<Booking> GetAllFromUser ( string username )
+        {
             List<Booking> books = new List<Booking>();
             Booking tempBook;
             DBCustomer dbcus = new DBCustomer();
             DBEscapeRoom dber = new DBEscapeRoom();
             DBEmployee dbemp = new DBEmployee();
 
-            using (SqlConnection connection = new SqlConnection(_connectionString)) {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
                 connection.Open();
-                using (SqlCommand cmdGetBook = connection.CreateCommand()) {
+                using (SqlCommand cmdGetBook = connection.CreateCommand())
+                {
                     cmdGetBook.CommandText = "SELECT Booking.* FROM Booking WHERE UserName = @UserName";
-                    cmdGetBook.Parameters.AddWithValue("@UserName",username);
+                    cmdGetBook.Parameters.AddWithValue("@UserName",  username);
                     SqlDataReader reader = cmdGetBook.ExecuteReader();
 
-                    while (reader.Read()) {
-                        tempBook = new Booking() {
+                    while (reader.Read())
+                    {
+                        tempBook = new Booking()
+                        {
                             Id = reader.GetInt32(reader.GetOrdinal("BookingID")),
                             amountOfPeople = reader.GetInt32(reader.GetOrdinal("AmountOfPeople")),
                             bookingTime = reader.GetTimeSpan(reader.GetOrdinal("BookingTime")),
@@ -185,9 +213,24 @@ namespace ProductService.DataAccessLayer
             return books;
         }
 
-        public void Update(Booking entity)
+        public void Update ( Booking BOOK )
         {
-            throw new NotImplementedException();
+
+            using (SqlConnection connection = new SqlConnection(_connectionString)) {
+                connection.Open();
+                using (SqlCommand cmdUpdateBook = connection.CreateCommand()) {
+
+                    cmdUpdateBook.CommandText = "UPDATE Booking SET BookingTime = @BookingTime, BDate = @BDate, AmountOfPeople = @AmountOfPeople, EscapeRoomID = @EscapeRoomID, EmployeeID = @EmployeeID, UserName = @UserName  WHERE BookingID = @BookingID";
+                    cmdUpdateBook.Parameters.AddWithValue("BookingTime", BOOK.bookingTime);
+                    cmdUpdateBook.Parameters.AddWithValue("Bdate", BOOK.date);
+                    cmdUpdateBook.Parameters.AddWithValue("AmountOfPeople", BOOK.amountOfPeople);
+                    cmdUpdateBook.Parameters.AddWithValue("EscapeRoomID", BOOK.er.escapeRoomID);
+                    cmdUpdateBook.Parameters.AddWithValue("EmployeeID", BOOK.emp.employeeID);
+                    cmdUpdateBook.Parameters.AddWithValue("UserName", BOOK.cus.username);
+                    cmdUpdateBook.Parameters.AddWithValue("BookingID", BOOK.Id);
+                    cmdUpdateBook.ExecuteNonQuery();
+                }
+            }
         }
     }
 }

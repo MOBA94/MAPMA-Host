@@ -69,6 +69,8 @@ namespace WCFServiceTest
             Assert.AreEqual(book.cus.username, hostBook.cus.username);
 
             bs.Delete(book.emp.employeeID, book.cus.username, book.er.escapeRoomID, book.bookingTime, book.amountOfPeople, book.date);
+
+            Assert.IsNull(bs.Get(book.er.escapeRoomID, book.cus.username, book.date));
         }
     }
 }

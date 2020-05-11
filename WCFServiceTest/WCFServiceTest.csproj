@@ -53,6 +53,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CreateNewRoomTest.cs" />
     <Compile Include="SaltAndHashTest.cs" />
+    <Compile Include="GetAllFromUserTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

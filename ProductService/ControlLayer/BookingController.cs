@@ -7,7 +7,7 @@ using ModelLayer;
 using ProductService.DataAccessLayer;
 
 namespace ProductService.ControlLayer {
-    class BookingController {
+    public class BookingController {
         private CustomerController CusCon;
         private EscapeRoomController ERCon;
         private EmployeeController ECon;
@@ -98,10 +98,6 @@ namespace ProductService.ControlLayer {
         public IEnumerable<Booking> GetAllFromUser(string username) {
 
             return dbBook.GetAllFromUser(username);
-        }
-
-        public void Update(Booking entity) {
-            throw new NotImplementedException();
         }
 
         public List<Booking> CheckBooking(int EscID, DateTime Bdate) {
