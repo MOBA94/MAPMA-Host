@@ -41,9 +41,9 @@ namespace ProductService {
             return EscCon.FreeTimes(ER_ID,Bdate);
         }
 
-        public void Update(string name, string description, decimal maxClearTime, decimal cleanTime, decimal price, decimal rating, int empId, int EscId) {
+        public void Update(string name, string description, decimal maxClearTime, decimal cleanTime, decimal price, decimal rating, int empId, int EscId, byte[] img) {
             EscapeRoomController EscCon = new EscapeRoomController();
-            EscCon.UpdateRoom(name, description, maxClearTime, cleanTime, price, rating, empId, EscId);
+            EscCon.UpdateRoom(name, description, maxClearTime, cleanTime, price, rating, empId, EscId, img);
         }
     }
 }

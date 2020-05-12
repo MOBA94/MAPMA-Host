@@ -77,7 +77,8 @@ namespace ProductService.DataAccessLayer {
                         escapeRoom.description = reader.GetString(reader.GetOrdinal("EsDescription"));
                         escapeRoom.rating = reader.GetDecimal(reader.GetOrdinal("Rating"));
                         escapeRoom.emp = DBemp.Get(reader.GetInt32(reader.GetOrdinal("EmployeeID")));
-                       
+                        escapeRoom.Image = (byte[])reader.GetSqlBinary(reader.GetOrdinal("Image"));
+
 
                         int i = 0;
 
@@ -118,6 +119,7 @@ namespace ProductService.DataAccessLayer {
                         tempER.description = reader.GetString(reader.GetOrdinal("EsDescription"));
                         tempER.rating = reader.GetDecimal(reader.GetOrdinal("Rating"));
                         tempER.emp = EmpDB.Get(reader.GetInt32(reader.GetOrdinal("EmployeeID")));
+                        tempER.Image = (byte[])reader.GetSqlBinary(reader.GetOrdinal("Image"));
 
 
 
@@ -143,7 +145,7 @@ namespace ProductService.DataAccessLayer {
                 connection.Open();
                 using (SqlCommand cmdUpdateRoom = connection.CreateCommand()) {
 
-                    cmdUpdateRoom.CommandText = "UPDATE EscapeRoom SET EsName = @EsName, EsDescription = @EsDescription, Price = @Price, MaxClearTime = @MaxClearTime, CleanTime = @CleanTime, Rating = @Rating, EmployeeID = @EmployeeID  WHERE EscapeRoomID = @EscapeRoomID";
+                    cmdUpdateRoom.CommandText = "UPDATE EscapeRoom SET EsName = @EsName, EsDescription = @EsDescription, Price = @Price, MaxClearTime = @MaxClearTime, CleanTime = @CleanTime, Rating = @Rating, EmployeeID = @EmployeeID, Image = @Image  WHERE EscapeRoomID = @EscapeRoomID";
                     cmdUpdateRoom.Parameters.AddWithValue("EsName", ER.name);
                     cmdUpdateRoom.Parameters.AddWithValue("EsDescription", ER.description);
                     cmdUpdateRoom.Parameters.AddWithValue("Price", ER.price);
@@ -152,6 +154,10 @@ namespace ProductService.DataAccessLayer {
                     cmdUpdateRoom.Parameters.AddWithValue("Rating", ER.rating);
                     cmdUpdateRoom.Parameters.AddWithValue("EmployeeID", ER.emp.employeeID);
                     cmdUpdateRoom.Parameters.AddWithValue("EscapeRoomID", ER.escapeRoomID);
+                    if (ER.Image != null)
+                    {
+                        cmdUpdateRoom.Parameters.AddWithValue("Image", ER.Image);
+                    } 
                     cmdUpdateRoom.ExecuteNonQuery();
 
                 }

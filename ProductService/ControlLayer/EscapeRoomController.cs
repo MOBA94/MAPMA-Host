@@ -41,7 +41,7 @@ namespace ProductService.ControlLayer {
             DBER.Delete(ER_ID);
         }
 
-        public void UpdateRoom (string name, string description, decimal maxClearTime, decimal cleanTime, decimal price, decimal rating, int empId, int escId) {
+        public void UpdateRoom (string name, string description, decimal maxClearTime, decimal cleanTime, decimal price, decimal rating, int empId, int escId, byte[] img) {
             EmployeeController ec = new EmployeeController();
             EscapeRoom ER = new EscapeRoom() {
                 escapeRoomID = escId,
@@ -51,7 +51,8 @@ namespace ProductService.ControlLayer {
                 cleanTime = cleanTime,
                 price = price,
                 rating = rating,
-                emp = ec.Get(empId)
+                emp = ec.Get(empId),
+                Image = img
             };
             
             DBER.Update(ER);
