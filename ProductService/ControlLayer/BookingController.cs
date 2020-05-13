@@ -41,7 +41,7 @@ namespace ProductService.ControlLayer {
                     }
                     else {
                         return 0;
-                    }
+                    } 
             }
             
         }
