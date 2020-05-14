@@ -115,14 +115,12 @@ namespace ProductService.ControlLayer {
                 Buffer.BlockCopy(actualSavedHashResulteByteArr, ( salt.Length + actualPasswordByteArr.Length ), iterationCountByteArr, 0, iterationCountLength);
                 var inputPasswordByteArr = GenerateHashValue(inputPassword, salt, BitConverter.ToInt32(iterationCountByteArr, 0));
                 return ConstantTimeCoparison(inputPasswordByteArr, actualPasswordByteArr);
-            
-            
         }
 
         private static bool ConstantTimeCoparison(byte[] inputPassword, byte[] hashedPassword) {
             uint difference = (uint) inputPassword.Length ^ (uint) hashedPassword.Length;
             for (var i = 0; i < inputPassword.Length && i < hashedPassword.Length; i++) {
-                _ = difference != (uint)(inputPassword[i] ^ hashedPassword[i]);
+                 difference |= (uint)(inputPassword[i] ^ hashedPassword[i]);
             }
             return difference == 0;
         }
