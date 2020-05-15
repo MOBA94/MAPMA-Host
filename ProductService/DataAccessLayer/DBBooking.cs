@@ -218,18 +218,31 @@ namespace ProductService.DataAccessLayer {
 
             using (SqlConnection connection = new SqlConnection(_connectionString)) {
                 connection.Open();
-                using (SqlCommand cmdUpdateBook = connection.CreateCommand()) {
+                using (IDbTransaction tran = connection.BeginTransaction())
+                    try
+                    {
+                        using (SqlCommand cmdUpdateBook = connection.CreateCommand())
+                        {
 
-                    cmdUpdateBook.CommandText = "UPDATE Booking SET BookingTime = @BookingTime, BDate = @BDate, AmountOfPeople = @AmountOfPeople, EscapeRoomID = @EscapeRoomID, EmployeeID = @EmployeeID, UserName = @UserName  WHERE BookingID = @BookingID";
-                    cmdUpdateBook.Parameters.AddWithValue("BookingTime", BOOK.bookingTime);
-                    cmdUpdateBook.Parameters.AddWithValue("Bdate", BOOK.date);
-                    cmdUpdateBook.Parameters.AddWithValue("AmountOfPeople", BOOK.amountOfPeople);
-                    cmdUpdateBook.Parameters.AddWithValue("EscapeRoomID", BOOK.er.escapeRoomID);
-                    cmdUpdateBook.Parameters.AddWithValue("EmployeeID", BOOK.emp.employeeID);
-                    cmdUpdateBook.Parameters.AddWithValue("UserName", BOOK.cus.username);
-                    cmdUpdateBook.Parameters.AddWithValue("BookingID", BOOK.Id);
-                    cmdUpdateBook.ExecuteNonQuery();
-                }
+                            cmdUpdateBook.CommandText = "UPDATE Booking SET BookingTime = @BookingTime, BDate = @BDate, AmountOfPeople = @AmountOfPeople, EscapeRoomID = @EscapeRoomID, EmployeeID = @EmployeeID, UserName = @UserName  WHERE BookingID = @BookingID";
+                            cmdUpdateBook.Transaction = tran as SqlTransaction;
+                            cmdUpdateBook.Parameters.AddWithValue("BookingTime", BOOK.bookingTime);
+                            cmdUpdateBook.Parameters.AddWithValue("Bdate", BOOK.date);
+                            cmdUpdateBook.Parameters.AddWithValue("AmountOfPeople", BOOK.amountOfPeople);
+                            cmdUpdateBook.Parameters.AddWithValue("EscapeRoomID", BOOK.er.escapeRoomID);
+                            cmdUpdateBook.Parameters.AddWithValue("EmployeeID", BOOK.emp.employeeID);
+                            cmdUpdateBook.Parameters.AddWithValue("UserName", BOOK.cus.username);
+                            cmdUpdateBook.Parameters.AddWithValue("BookingID", BOOK.Id);
+                            cmdUpdateBook.ExecuteNonQuery();
+                            tran.Commit();
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        tran.Rollback();
+                        Console.WriteLine(e);
+                        Console.ReadLine();
+                    }
             }
         }
 

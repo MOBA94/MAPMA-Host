@@ -38,14 +38,19 @@ namespace ProductService.ControlLayer {
         }
 
         public Customer Login(string inputPassword, string username) {
-            Customer cus = DBcus.Get(username);
-
-            if (VerifyHashedPassword(cus.password, inputPassword) == true){
-                return cus;
+            try {
+                Customer cus = DBcus.Get(username);
+                if (VerifyHashedPassword(cus.password, inputPassword) == true) {
+                    return cus;
+                }
+                else {
+                    return null;
+                }
             }
-            else {
+            catch (ArgumentNullException ANE) {
                 return null;
             }
+            
         }
 
         public int Register(Customer cus, string password) {

@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using ModelLayer;
 using ProductService.DataAccessLayer;
 using ModelLayer;
+using System.Drawing;
+using System.IO;
 
 namespace ProductService.ControlLayer {
     class EscapeRoomController {
@@ -25,13 +27,28 @@ namespace ProductService.ControlLayer {
             return DBER.GetAllForOwner();
         }
 
+        private byte[] ConvertImgToBinary ( Image img )
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                img.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);    
+                
+                return ms.ToArray();
+            }
+
+        }
+
         public void CreateRoomOwner (string name, string description, decimal maxClearTime, decimal cleanTime, decimal price, decimal rating, int empId ,byte[] img) {
 
             if(img != null) {                
                 DBER.Create(name, description, maxClearTime, cleanTime, price, rating, empId, img);
             }
             else {
-                img = null;
+                string path = System.Windows.Forms.Application.StartupPath.Substring(0, (System.Windows.Forms.Application.StartupPath.Length - 10));
+                Bitmap bm = new Bitmap(path + "\\Pictures\\MAPMA_PIC.jpg");
+                byte[] Dreail = ConvertImgToBinary(bm);
+
+                img = Dreail;
                 DBER.Create(name, description, maxClearTime, cleanTime, price, rating, empId, img);
             }
            

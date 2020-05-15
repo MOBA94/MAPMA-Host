@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
 using ModelLayer;
+using System.Data;
 
 namespace ProductService.DataAccessLayer {
     class DBEscapeRoom : IESCAPEROOM<EscapeRoom> {
@@ -15,30 +16,47 @@ namespace ProductService.DataAccessLayer {
             _connectionString = DB.DbConnectionString;
         }
 
-        public void Create (string name, string description, decimal maxClearTime, decimal cleanTime, decimal price, decimal rating, int empId, byte[] img )
+        public void Create ( string name, string description, decimal maxClearTime, decimal cleanTime, decimal price, decimal rating, int empId, byte[] img )
         {
             EscapeRoom escapeRoom = new EscapeRoom();
             String tempCheck;
             DBEmployee DBemp = new DBEmployee();
 
-            using (SqlConnection connection = new SqlConnection(_connectionString)) {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
                 connection.Open();
-                using (SqlCommand cmdReadERs = connection.CreateCommand()) {
-                        cmdReadERs.CommandText  =  "INSERT INTO EscapeRoom(EsName, EsDescription, MaxClearTime, CleanTime, Price, Rating, EmployeeID,Image)" +
-                        "VALUES(@EsName, @EsDescription, @MaxClearTime, @CleanTime, @Price, @Rating, @EmployeeID, @Image)";
-                    cmdReadERs.Parameters.AddWithValue("EsName", name);
-                    cmdReadERs.Parameters.AddWithValue("EsDescription", description);
-                    cmdReadERs.Parameters.AddWithValue("MaxClearTime", maxClearTime);
-                    cmdReadERs.Parameters.AddWithValue("CleanTime", cleanTime);
-                    cmdReadERs.Parameters.AddWithValue("Price", price);
-                    cmdReadERs.Parameters.AddWithValue("Rating", rating);
-                    cmdReadERs.Parameters.AddWithValue("EmployeeId", empId);
-                    if (img != null)
+                using (IDbTransaction tran = connection.BeginTransaction())
+                    try
                     {
-                        cmdReadERs.Parameters.AddWithValue("Image", img);
+                        using (SqlCommand cmdReadERs = connection.CreateCommand())
+                        {
+                            cmdReadERs.CommandText = "INSERT INTO EscapeRoom(EsName, EsDescription, MaxClearTime, CleanTime, Price, Rating, EmployeeID, Image)" +
+                            "VALUES(@EsName, @EsDescription, @MaxClearTime, @CleanTime, @Price, @Rating, @EmployeeID, @Image)";
+                            cmdReadERs.Transaction = tran as SqlTransaction;
+                            cmdReadERs.Parameters.AddWithValue("EsName", name);
+                            cmdReadERs.Parameters.AddWithValue("EsDescription", description);
+                            cmdReadERs.Parameters.AddWithValue("MaxClearTime", maxClearTime);
+                            cmdReadERs.Parameters.AddWithValue("CleanTime", cleanTime);
+                            cmdReadERs.Parameters.AddWithValue("Price", price);
+                            cmdReadERs.Parameters.AddWithValue("Rating", rating);
+                            cmdReadERs.Parameters.AddWithValue("EmployeeId", empId);
+                            if (img != null && img.Length > 0) {
+                                cmdReadERs.Parameters.AddWithValue("Image", img);
+                            }
+                            else {
+                                cmdReadERs.Parameters.Add("Image", System.Data.SqlDbType.VarBinary, -1);
+                                cmdReadERs.Parameters["Image"].Value = DBNull.Value;
+                            }
+                            cmdReadERs.ExecuteNonQuery();
+                            tran.Commit();
+                        }
                     }
-                    cmdReadERs.ExecuteNonQuery();
-                }
+                    catch (Exception e)
+                    {
+                        tran.Rollback();
+                        Console.WriteLine(e);
+                        Console.ReadLine();
+                    }
             }
         }
 
@@ -143,24 +161,40 @@ namespace ProductService.DataAccessLayer {
 
             using (SqlConnection connection = new SqlConnection(_connectionString)) {
                 connection.Open();
-                using (SqlCommand cmdUpdateRoom = connection.CreateCommand()) {
-
-                    cmdUpdateRoom.CommandText = "UPDATE EscapeRoom SET EsName = @EsName, EsDescription = @EsDescription, Price = @Price, MaxClearTime = @MaxClearTime, CleanTime = @CleanTime, Rating = @Rating, EmployeeID = @EmployeeID, Image = @Image  WHERE EscapeRoomID = @EscapeRoomID";
-                    cmdUpdateRoom.Parameters.AddWithValue("EsName", ER.name);
-                    cmdUpdateRoom.Parameters.AddWithValue("EsDescription", ER.description);
-                    cmdUpdateRoom.Parameters.AddWithValue("Price", ER.price);
-                    cmdUpdateRoom.Parameters.AddWithValue("MaxClearTime", ER.maxClearTime);
-                    cmdUpdateRoom.Parameters.AddWithValue("CleanTime", ER.cleanTime);
-                    cmdUpdateRoom.Parameters.AddWithValue("Rating", ER.rating);
-                    cmdUpdateRoom.Parameters.AddWithValue("EmployeeID", ER.emp.employeeID);
-                    cmdUpdateRoom.Parameters.AddWithValue("EscapeRoomID", ER.escapeRoomID);
-                    if (ER.Image != null)
+                using (IDbTransaction tran = connection.BeginTransaction())
+                    try
                     {
-                        cmdUpdateRoom.Parameters.AddWithValue("Image", ER.Image);
-                    } 
-                    cmdUpdateRoom.ExecuteNonQuery();
+                        using (SqlCommand cmdUpdateRoom = connection.CreateCommand())
+                        {
 
-                }
+                            cmdUpdateRoom.CommandText = "UPDATE EscapeRoom SET EsName = @EsName, EsDescription = @EsDescription, Price = @Price, MaxClearTime = @MaxClearTime, CleanTime = @CleanTime, Rating = @Rating, EmployeeID = @EmployeeID, Image = @Image  WHERE EscapeRoomID = @EscapeRoomID";
+                            cmdUpdateRoom.Transaction = tran as SqlTransaction;
+                            cmdUpdateRoom.Parameters.AddWithValue("EsName", ER.name);
+                            cmdUpdateRoom.Parameters.AddWithValue("EsDescription", ER.description);
+                            cmdUpdateRoom.Parameters.AddWithValue("Price", ER.price);
+                            cmdUpdateRoom.Parameters.AddWithValue("MaxClearTime", ER.maxClearTime);
+                            cmdUpdateRoom.Parameters.AddWithValue("CleanTime", ER.cleanTime);
+                            cmdUpdateRoom.Parameters.AddWithValue("Rating", ER.rating);
+                            cmdUpdateRoom.Parameters.AddWithValue("EmployeeID", ER.emp.employeeID);
+                            cmdUpdateRoom.Parameters.AddWithValue("EscapeRoomID", ER.escapeRoomID);
+                            if (ER.Image != null)
+                            {
+                                cmdUpdateRoom.Parameters.AddWithValue("Image", ER.Image);
+                            }
+                            else {
+                                cmdUpdateRoom.Parameters.Add("Image", System.Data.SqlDbType.VarBinary, -1);
+                                cmdUpdateRoom.Parameters["Image"].Value = DBNull.Value;
+                            }
+                            cmdUpdateRoom.ExecuteNonQuery();
+                            tran.Commit();
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        tran.Rollback();
+                        Console.WriteLine(e);
+                        Console.ReadLine();
+                    }
             }
         }
     }

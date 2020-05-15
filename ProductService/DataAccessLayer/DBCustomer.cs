@@ -84,31 +84,31 @@ namespace ProductService.DataAccessLayer
             return cus;
         }
 
-        public Customer Login ( string username, string password )
-        {
-            Customer cus = new Customer();
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                connection.Open();
-                using (SqlCommand cmd = connection.CreateCommand())
-                {
-                    cmd.CommandText = "SELECT FirstName, LastName, Mail, Phone, CustomerNo, UserName From Customer WHERE UserName=@UserName AND CPassword = @CPassword";
-                    cmd.Parameters.AddWithValue("UserName", username);
-                    cmd.Parameters.AddWithValue("CPassword", password);
-                    SqlDataReader reader = cmd.ExecuteReader();
-                    if (reader.Read())
-                    {
-                        cus.firstName = reader.GetString(reader.GetOrdinal("FirstName"));
-                        cus.lastName = reader.GetString(reader.GetOrdinal("LastName"));
-                        cus.mail = reader.GetString(reader.GetOrdinal("Mail"));
-                        cus.phone = reader.GetString(reader.GetOrdinal("Phone"));
-                        cus.customerNo = reader.GetInt32(reader.GetOrdinal("CustomerNo"));
-                        cus.username = reader.GetString(reader.GetOrdinal("UserName"));
-                    }
-                }
-            }
-            return cus;
-        }
+        //public Customer Login ( string username, string password )
+        //{
+        //    Customer cus = new Customer();
+        //    using (SqlConnection connection = new SqlConnection(_connectionString))
+        //    {
+        //        connection.Open();
+        //        using (SqlCommand cmd = connection.CreateCommand())
+        //        {
+        //            cmd.CommandText = "SELECT FirstName, LastName, Mail, Phone, CustomerNo, UserName From Customer WHERE UserName=@UserName AND CPassword = @CPassword";
+        //            cmd.Parameters.AddWithValue("UserName", username);
+        //            cmd.Parameters.AddWithValue("CPassword", password);
+        //            SqlDataReader reader = cmd.ExecuteReader();
+        //            if (reader.Read())
+        //            {
+        //                cus.firstName = reader.GetString(reader.GetOrdinal("FirstName"));
+        //                cus.lastName = reader.GetString(reader.GetOrdinal("LastName"));
+        //                cus.mail = reader.GetString(reader.GetOrdinal("Mail"));
+        //                cus.phone = reader.GetString(reader.GetOrdinal("Phone"));
+        //                cus.customerNo = reader.GetInt32(reader.GetOrdinal("CustomerNo"));
+        //                cus.username = reader.GetString(reader.GetOrdinal("UserName"));
+        //            }
+        //        }
+        //    }
+        //    return cus;
+        //}
 
         public IEnumerable<Customer> GetAll ( )
         {
