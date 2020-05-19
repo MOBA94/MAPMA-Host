@@ -8,6 +8,7 @@ using ModelLayer;
 using System.Data;
 
 namespace ProductService.DataAccessLayer {
+   
     class DBEscapeRoom : IESCAPEROOM<EscapeRoom> {
 
         private string _connectionString;
