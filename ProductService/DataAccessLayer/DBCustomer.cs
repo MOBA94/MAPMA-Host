@@ -14,12 +14,17 @@ namespace ProductService.DataAccessLayer
     {
 
         private string _connectionString;
-
+        /// <summary>
+        /// the constructor for Customer to the database
+        /// </summary>
         public DBCustomer ( )
         {
             _connectionString = DB.DbConnectionString;
         }
-
+        /// <summary>
+        /// the method to create a new customer whit all the info on the customer to put in the database 
+        /// </summary>
+        /// <param name="cus"> getting a Customer from above there holds all the info about FirstName, LastName, Mail, Phone, UserName, and the hassing + salted password </param>
         public void Register(Customer cus) {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
@@ -57,7 +62,11 @@ namespace ProductService.DataAccessLayer
         {
             throw new NotImplementedException();
         }
-
+        /// <summary>
+        /// getting a customer on the user-name from the database
+        /// </summary>
+        /// <param name="username">Customers user-name</param>
+        /// <returns> a customer whit all info FirstName, LastName, Mail, Phone, CustomerNo , UserName and password from the database </returns>
         public Customer Get ( string username )
         {
             Customer cus = new Customer();
@@ -83,38 +92,20 @@ namespace ProductService.DataAccessLayer
             }
             return cus;
         }
-
-        //public Customer Login ( string username, string password )
-        //{
-        //    Customer cus = new Customer();
-        //    using (SqlConnection connection = new SqlConnection(_connectionString))
-        //    {
-        //        connection.Open();
-        //        using (SqlCommand cmd = connection.CreateCommand())
-        //        {
-        //            cmd.CommandText = "SELECT FirstName, LastName, Mail, Phone, CustomerNo, UserName From Customer WHERE UserName=@UserName AND CPassword = @CPassword";
-        //            cmd.Parameters.AddWithValue("UserName", username);
-        //            cmd.Parameters.AddWithValue("CPassword", password);
-        //            SqlDataReader reader = cmd.ExecuteReader();
-        //            if (reader.Read())
-        //            {
-        //                cus.firstName = reader.GetString(reader.GetOrdinal("FirstName"));
-        //                cus.lastName = reader.GetString(reader.GetOrdinal("LastName"));
-        //                cus.mail = reader.GetString(reader.GetOrdinal("Mail"));
-        //                cus.phone = reader.GetString(reader.GetOrdinal("Phone"));
-        //                cus.customerNo = reader.GetInt32(reader.GetOrdinal("CustomerNo"));
-        //                cus.username = reader.GetString(reader.GetOrdinal("UserName"));
-        //            }
-        //        }
-        //    }
-        //    return cus;
-        //}
-
+      
+        /// <summary>
+        /// not implemented yet
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<Customer> GetAll ( )
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// not implemented yet
+        /// </summary>
+        /// <param name="entity"></param>
         public void Update ( Customer entity )
         {
             throw new NotImplementedException();

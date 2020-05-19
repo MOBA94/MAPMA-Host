@@ -11,21 +11,36 @@ namespace ProductService.DataAccessLayer
     class DBEmployee : IEMPLOYEE<Employee>
     {
         private string _connectionString;
-
+        /// <summary>
+        /// the constructor for employee to the database
+        /// </summary>
         public DBEmployee() {
             _connectionString = DB.DbConnectionString;
         }
 
+        /// <summary>
+        /// not implemented yet
+        /// </summary>
+        /// <param name="entity"></param>
         public void Create ( Employee entity )
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// not implemented yet
+        /// </summary>
+        /// <param name="id"></param>
         public void Delete ( int id )
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// the method to get a employee for the database
+        /// </summary>
+        /// <param name="id">the employees id</param>
+        /// <returns>a employee whit all the info about the person</returns>
         public Employee Get ( int id )
         {
             Employee employee = new Employee();
@@ -52,7 +67,10 @@ namespace ProductService.DataAccessLayer
 
                     return employee;
         }
-
+        /// <summary>
+        /// a method to get all the employee for the database whit all the info about the employees
+        /// </summary>
+        /// <returns>a list off employees</returns>
         public IEnumerable<Employee> GetAll ( )
         {
             List<Employee> Employees = new List<Employee>();
@@ -84,7 +102,10 @@ namespace ProductService.DataAccessLayer
             }
             return Employees;
         }
-
+        /// <summary>
+        /// not implemented yet
+        /// </summary>
+        /// <param name="entity"></param>
         public void Update ( Employee entity )
         {
             throw new NotImplementedException();

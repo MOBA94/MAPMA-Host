@@ -12,10 +12,24 @@ namespace ProductService.DataAccessLayer {
 
         private string _connectionString;
 
+        /// <summary>
+        /// the constructor for Escape-Room to the database
+        /// </summary>
         public DBEscapeRoom() {
             _connectionString = DB.DbConnectionString;
         }
 
+        /// <summary>
+        /// the method to create a new escape-room whit all the info about it and image to the database
+        /// </summary>
+        /// <param name="name"> the title off the room</param>
+        /// <param name="description">the telling about the room</param>
+        /// <param name="maxClearTime"> how long the customer can use in the room before he have to quit </param>
+        /// <param name="cleanTime"> how long it will tack to clean the room and a new customer can use it</param>
+        /// <param name="price"> the price for the room</param>
+        /// <param name="rating"> a number to set to be 0 from start</param>
+        /// <param name="empId"> employee id</param>
+        /// <param name="img"> a image in bytes</param>
         public void Create ( string name, string description, decimal maxClearTime, decimal cleanTime, decimal price, decimal rating, int empId, byte[] img )
         {
             EscapeRoom escapeRoom = new EscapeRoom();
@@ -60,6 +74,10 @@ namespace ProductService.DataAccessLayer {
             }
         }
 
+        /// <summary>
+        /// the method to delete a escape-room in the database
+        /// </summary>
+        /// <param name="id"> escape-rooms id</param>
         public void Delete(int id) {
             using (SqlConnection connection = new SqlConnection(_connectionString)) {
                 connection.Open();
@@ -70,7 +88,11 @@ namespace ProductService.DataAccessLayer {
                 }
             }
         }
-
+        /// <summary>
+        /// the method to get a escape-room from the database
+        /// </summary>
+        /// <param name="ER_ID">escape-rooms id</param>
+        /// <returns>a escape-room whit all the info about it</returns>
         public EscapeRoom GetForOwner(int ER_ID) {
             EscapeRoom escapeRoom = new EscapeRoom();
             String tempCheck;
@@ -113,6 +135,10 @@ namespace ProductService.DataAccessLayer {
             return escapeRoom;
         }
 
+        /// <summary>
+        /// the method to get all escape-rooms for the database whit all the info about the rooms
+        /// </summary>
+        /// <returns>a list off escape-rooms</returns>
         public IEnumerable<EscapeRoom> GetAllForOwner() {
             List<EscapeRoom> EscapeRooms = new List<EscapeRoom>();
             EscapeRoom tempER;
@@ -157,6 +183,10 @@ namespace ProductService.DataAccessLayer {
             return EscapeRooms;
         }
 
+        /// <summary>
+        /// the method to update a escape-room to the database whit a transaction
+        /// </summary>
+        /// <param name="ER">getting a booking from above there holds all the info about the escape-room as name,description, price, maxClearTime, cleanTime,rating and escapeRoomID </param>
         public void Update(EscapeRoom ER) {
 
             using (SqlConnection connection = new SqlConnection(_connectionString)) {

@@ -8,6 +8,9 @@ using System.Configuration;
 
 namespace ProductService.DataAccessLayer {
     public class DB {
+        /// <summary>
+        /// This returns the ConnectionString from ip.config file 
+        /// </summary>
         public static string DbConnectionString {
             get { return ConfigurationManager.ConnectionStrings["ConnectMsSqlString"].ToString(); }
             //get {

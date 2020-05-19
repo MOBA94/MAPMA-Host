@@ -12,12 +12,20 @@ namespace ProductService.DataAccessLayer {
     {
 
         private string _connectionString;
-
+        /// <summary>
+        /// the constructor for booking to the database
+        /// </summary>
         public DBBooking()
         {
             _connectionString = DB.DbConnectionString;
         }
 
+        /// <summary>
+        /// the method to retrieve data form the database about the bookings for a Escape-room and on that date
+        /// </summary>
+        /// <param name="EscID"> the escape-room id </param>
+        /// <param name="Bdate"> the date of the chosen day to the booking </param>
+        /// <returns> returns a list whit all bookings for the escape-room on that date</returns>
         public List<Booking> CheckBooking(int EscID, DateTime Bdate)
         {
             Booking TempBook;
@@ -30,8 +38,7 @@ namespace ProductService.DataAccessLayer {
                 connection.Open();
                 using (SqlCommand cmdGetBook = connection.CreateCommand())
                 {
-                    cmdGetBook.CommandText = "SELECT Booking.* FROM Booking WHERE EscapeRoomID =@EscapeRoomID AND BDate =@BDate";
-                    //skal være et lop og en excutebatch tror jeg. skal også retunere et list af bookings
+                    cmdGetBook.CommandText = "SELECT Booking.* FROM Booking WHERE EscapeRoomID =@EscapeRoomID AND BDate =@BDate";                    
                     cmdGetBook.Parameters.AddWithValue("@EscapeRoomID", EscID);
                     cmdGetBook.Parameters.AddWithValue("@BDate", Bdate);
                     SqlDataReader reader = cmdGetBook.ExecuteReader();
@@ -49,7 +56,10 @@ namespace ProductService.DataAccessLayer {
             }
             return book;
         }
-
+        /// <summary>
+        /// the method to create a booking in the database whit a transaction 
+        /// </summary>
+        /// <param name="book"> getting a booking from above there holds all the info about the time,date, user name, escape room id, how many people attending </param>
         public void Create(Booking book)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
@@ -84,7 +94,10 @@ namespace ProductService.DataAccessLayer {
                 }
             }
         }
-
+        /// <summary>
+        /// the method to delete a booking in the database
+        /// </summary>
+        /// <param name="book">Getting a booking from above there holds all the info about the time, date, user name, escape room id  </param>
         public void Delete(Booking book)
         {
 
@@ -103,7 +116,13 @@ namespace ProductService.DataAccessLayer {
                 }
             }
         }
-
+        /// <summary>
+        /// Getting a Booking for a user on the date and escape-room id in the database
+        /// </summary>
+        /// <param name="EscID">escape-room id</param>
+        /// <param name="username">users user-name </param>
+        /// <param name="Bdate">the date there has bin chosen</param>
+        /// <returns> the complete info about the booking there has bin asked for </returns>
         public Booking Get(int EscID, string username, DateTime Bdate)
         {
             Booking book = new Booking();
@@ -137,7 +156,10 @@ namespace ProductService.DataAccessLayer {
             }
             return book;
         }
-
+        /// <summary>
+        /// Getting all the booking from the database 
+        /// </summary>
+        /// <returns>a list whit all bookings in the database </returns>
         public IEnumerable<Booking> GetAll ( )
         {
             List<Booking> books = new List<Booking>();
@@ -174,7 +196,11 @@ namespace ProductService.DataAccessLayer {
             }
             return books;
         }
-
+        /// <summary>
+        /// the method  to retrive all booking for one user from the database
+        /// </summary>
+        /// <param name="username"> users user-name</param>
+        /// <returns> a list whit all booking for a user </returns>
         public IEnumerable<Booking> GetAllFromUser ( string username )
         {
             List<Booking> books = new List<Booking>();
@@ -212,7 +238,10 @@ namespace ProductService.DataAccessLayer {
             }
             return books;
         }
-
+        /// <summary>
+        /// the method to update a booking to the database
+        /// </summary>
+        /// <param name="BOOK">Getting a booking from above there holds all the info about the time, date, user name, escape room id, how many people and booking id</param>
         public void Update ( Booking BOOK )
         {
 
@@ -245,7 +274,11 @@ namespace ProductService.DataAccessLayer {
                     }
             }
         }
-
+        /// <summary>
+        /// the method to get all booking on a escape-room for the database
+        /// </summary>
+        /// <param name="EscId">escape-room id</param>
+        /// <returns> a list off booking on that escape-room </returns>
         public IEnumerable<Booking> GetAllOneRoom(int EscId) {
             List<Booking> books = new List<Booking>();
             Booking tempBook;
