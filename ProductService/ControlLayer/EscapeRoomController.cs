@@ -10,23 +10,51 @@ using System.Drawing;
 using System.IO;
 
 namespace ProductService.ControlLayer {
+
+
+    /// <summary>
+    /// <author>
+    /// Mick O. B. Andersen
+    /// Anders S. Brygger
+    /// Peter S. Clausen
+    /// Anders B. Larsen
+    /// Mads G. Ranzau
+    /// </author>
+    /// </summary>
     class EscapeRoomController {
         private IESCAPEROOM<EscapeRoom> DBER;
 
+        /// <summary>
+        /// the contructor for EscaperoomController
+        /// </summary>
         public EscapeRoomController() {
             DBER = new DBEscapeRoom();
             
            
         }
 
+        /// <summary>
+        /// the method to get a escaperoom 
+        /// </summary>
+        /// <param name="ER_ID">escaperooms id</param>
+        /// <returns>a EscapeRoom</returns>
         public EscapeRoom GetForOwner(int ER_ID) {
             return DBER.GetForOwner(ER_ID);
         }
 
+        /// <summary>
+        /// the method to get all the escaperooms 
+        /// </summary>
+        /// <returns>a list of escaperooms</returns>
         public IEnumerable<EscapeRoom> GetAllForOwner() {
             return DBER.GetAllForOwner();
         }
 
+        /// <summary>
+        /// the method to convert a image to bytes saved in a folder
+        /// </summary>
+        /// <param name="img">a Image</param>
+        /// <returns>a byte array of the image</returns>
         private byte[] ConvertImgToBinary ( Image img )
         {
             using (MemoryStream ms = new MemoryStream())
@@ -38,6 +66,17 @@ namespace ProductService.ControlLayer {
 
         }
 
+        /// <summary>
+        /// the method to create a escaperoom whit the parameters 
+        /// </summary>
+        /// <param name="name">the name off the escape-room</param>
+        /// <param name="description">the description of the escape-room</param>
+        /// <param name="maxClearTime">the time for how long the customer have the room</param>
+        /// <param name="cleanTime">the time for preparing the room to a new customer</param>
+        /// <param name="price"> the price</param>
+        /// <param name="rating"> the rating there is set to 0 at start</param>
+        /// <param name="empId"> Employees id</param>
+        /// <param name="img"> a image</param>
         public void CreateRoomOwner (string name, string description, decimal maxClearTime, decimal cleanTime, decimal price, decimal rating, int empId ,byte[] img) {
 
             if(img != null) {                
@@ -53,11 +92,26 @@ namespace ProductService.ControlLayer {
             }
            
         }
-
+        /// <summary>
+        /// the method to delete a escape-room
+        /// </summary>
+        /// <param name="ER_ID">escape-rooms id</param>
         public void DeleteEscapeRoom (int ER_ID){
             DBER.Delete(ER_ID);
         }
 
+        /// <summary>
+        /// the method to update the escape-rooms parameters
+        /// </summary>
+        /// <param name="name">the name off the escape-room</param>
+        /// <param name="description">the description of the escape-room</param>
+        /// <param name="maxClearTime">the time for how long the customer have the room</param>
+        /// <param name="cleanTime">the time for preparing the room to a new customer</param>
+        /// <param name="price"> the price</param>
+        /// <param name="rating"> the rating there is set to 0 at start</param>
+        /// <param name="empId">Employees id</param>
+        /// <param name="escId">escape-rooms id</param>
+        /// <param name="img"> a image</param>
         public void UpdateRoom (string name, string description, decimal maxClearTime, decimal cleanTime, decimal price, decimal rating, int empId, int escId, byte[] img) {
             EmployeeController ec = new EmployeeController();
             EscapeRoom ER = new EscapeRoom() {
@@ -75,6 +129,12 @@ namespace ProductService.ControlLayer {
             DBER.Update(ER);
         }
 
+        /// <summary>
+        /// a method to give all the time not tacking in that day in that escape-room
+        /// </summary>
+        /// <param name="ER_ID">escape-rooms id</param>
+        /// <param name="Bdate">the date of a day</param>
+        /// <returns>a list of the times a customer can chose from an book the time</returns>
         public List<TimeSpan> FreeTimes(int ER_ID, DateTime Bdate) {           
             List<Booking> bkl = new List<Booking>();
             EscapeRoom est = new EscapeRoom();

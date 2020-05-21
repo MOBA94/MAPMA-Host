@@ -8,6 +8,16 @@ using ModelLayer;
 using ProductService.ControlLayer;
 namespace ProductService {
    [ServiceBehavior(Namespace = "http://localhost:8734/Design_Time_Addresses/Booking")]
+
+    /// <summary>
+    /// <author>
+    /// Mick O. B. Andersen
+    /// Anders S. Brygger
+    /// Peter S. Clausen
+    /// Anders B. Larsen
+    /// Mads G. Ranzau
+    /// </author>
+    /// </summary>
     public class BookingServices : IBookingServices {
 
         /// <summary>

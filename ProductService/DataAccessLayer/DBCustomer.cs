@@ -9,6 +9,16 @@ using System.Data;
 using System.Security.Cryptography;
 
 namespace ProductService.DataAccessLayer
+
+/// <summary>
+/// <author>
+/// Mick O. B. Andersen
+/// Anders S. Brygger
+/// Peter S. Clausen
+/// Anders B. Larsen
+/// Mads G. Ranzau
+/// </author>
+/// </summary>
 {
     public class DBCustomer : ICUSTOMER<Customer>
     {

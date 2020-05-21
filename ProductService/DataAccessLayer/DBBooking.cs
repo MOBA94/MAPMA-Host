@@ -8,6 +8,16 @@ using System.Data.SqlClient;
 using System.Data;
 
 namespace ProductService.DataAccessLayer {
+
+    /// <summary>
+    /// <author>
+    /// Mick O. B. Andersen
+    /// Anders S. Brygger
+    /// Peter S. Clausen
+    /// Anders B. Larsen
+    /// Mads G. Ranzau
+    /// </author>
+    /// </summary>
     class DBBooking : IBOOKING<Booking>
     {
 

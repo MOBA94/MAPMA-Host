@@ -11,6 +11,11 @@ namespace ProductServiceHost
 {
     class Program
     {
+
+        /// <summary>
+        /// the method to run all the service and open all the connections
+        /// </summary>
+        /// <param name="args"></param>
         static void Main(string[] args)
         {
             
@@ -43,6 +48,10 @@ namespace ProductServiceHost
             }
         }
 
+        /// <summary>
+        /// the method to print the info for every connection there is
+        /// </summary>
+        /// <param name="host"></param>
         static void DisplayHostInfo(ServiceHost host)
         {
 

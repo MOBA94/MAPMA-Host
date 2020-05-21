@@ -9,6 +9,16 @@ using System.Threading.Tasks;
 namespace ProductService.DataAccessLayer
 {
     class DBEmployee : IEMPLOYEE<Employee>
+
+    /// <summary>
+    /// <author>
+    /// Mick O. B. Andersen
+    /// Anders S. Brygger
+    /// Peter S. Clausen
+    /// Anders B. Larsen
+    /// Mads G. Ranzau
+    /// </author>
+    /// </summary>
     {
         private string _connectionString;
         /// <summary>
