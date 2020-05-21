@@ -21,7 +21,7 @@ namespace ProductService.ControlLayer {
     /// Mads G. Ranzau
     /// </author>
     /// </summary>
-    class EscapeRoomController {
+    public class EscapeRoomController {
         private IESCAPEROOM<EscapeRoom> DBER;
 
         /// <summary>

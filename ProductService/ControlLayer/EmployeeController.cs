@@ -17,7 +17,7 @@ namespace ProductService.ControlLayer {
     /// Mads G. Ranzau
     /// </author>
     /// </summary>
-    class EmployeeController {
+    public class EmployeeController {
         private IEMPLOYEE<Employee> DBE;
 
         /// <summary>

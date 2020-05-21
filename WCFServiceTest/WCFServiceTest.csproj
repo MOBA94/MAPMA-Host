@@ -54,6 +54,7 @@
     <Compile Include="CreateNewRoomTest.cs" />
     <Compile Include="SaltAndHashTest.cs" />
     <Compile Include="GetAllFromUserTest.cs" />
+    <Compile Include="ConcurrencyTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
