@@ -70,7 +70,7 @@ namespace ProductService.DataAccessLayer {
         /// the method to create a booking in the database whit a transaction 
         /// </summary>
         /// <param name="book"> getting a booking from above there holds all the info about the time,date, user name, escape room id, how many people attending </param>
-        public void Create(Booking book)
+        public int Create(Booking book)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
@@ -94,9 +94,11 @@ namespace ProductService.DataAccessLayer {
                                 cmdInsertBook.Parameters.AddWithValue("EmployeeID", book.emp.employeeID);
                                 cmdInsertBook.ExecuteNonQuery();
                                 tran.Commit();
+                                return 1;
                             }
                             else {
                                 tran.Rollback();
+                                return 0;
                             }
                         }
                     }
@@ -105,6 +107,7 @@ namespace ProductService.DataAccessLayer {
                         tran.Rollback();
                         Console.WriteLine(e);
                         Console.ReadLine();
+                        return 0;
                     }
                 }
             }

@@ -17,7 +17,7 @@ namespace ProductService.DataAccessLayer {
     /// </author>
     /// </summary>
     interface IBOOKING<T> {
-        void Create(T entity);
+        int Create(T entity);
         Booking Get(int EscID, string username, DateTime Bdate);
         List<Booking> CheckBooking(int EscID,  DateTime Bdate);
         IEnumerable<T> GetAll();

@@ -46,12 +46,12 @@ namespace ProductService.ControlLayer {
         /// <param name="Bdate">the date of a day</param>
         /// <returns>returns a int to tell if the booking is completede or not</returns>
         public int Create(int EmpID, string username, int ER_ID, TimeSpan bookTime, int AOP, DateTime Bdate) {
-            List<TimeSpan> checklist = ERCon.FreeTimes(ER_ID, Bdate);
-            if (checklist.Count == 0) {
-                return 0;
-            }
-            else {
-                if (checklist.Contains(bookTime)) {
+            //List<TimeSpan> checklist = ERCon.FreeTimes(ER_ID, Bdate);
+            //if (checklist.Count == 0) {
+            //    return 0;
+            //}
+            //else {
+            //    if (checklist.Contains(bookTime)) {
                             Booking tempBook = new Booking {
                             emp = ECon.Get(EmpID),
                             cus = CusCon.Get(username),
@@ -60,14 +60,14 @@ namespace ProductService.ControlLayer {
                         tempBook.bookingTime = bookTime;
                         tempBook.amountOfPeople = AOP;
                         tempBook.date = Bdate;
-
-                        dbBook.Create(tempBook);
-                        return 1;
-                    }
-                    else {
-                        return 0;
-                    } 
-            }
+                        
+                        return dbBook.Create(tempBook);
+                        //return 1;
+                    //}
+                    //else {
+                    //    return 0;
+                    //} 
+            //}
             
         }
 
