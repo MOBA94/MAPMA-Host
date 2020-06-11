@@ -85,14 +85,19 @@ namespace ProductService.DataAccessLayer {
                                 " BDate, AmountOfPeople, UserName, EmployeeID)" +
                                 " VALUES(@EscapeRoomID, @BookingTime, @BDate, @AmountOfPeople, @UserName, @EmployeeID)";
                             cmdInsertBook.Transaction = tran as SqlTransaction;
-                            cmdInsertBook.Parameters.AddWithValue("EscapeRoomID", book.er.escapeRoomID);
-                            cmdInsertBook.Parameters.AddWithValue("BookingTime", book.bookingTime);
-                            cmdInsertBook.Parameters.AddWithValue("BDate", book.date);
-                            cmdInsertBook.Parameters.AddWithValue("AmountOfPeople", book.amountOfPeople);
-                            cmdInsertBook.Parameters.AddWithValue("UserName", book.cus.username);
-                            cmdInsertBook.Parameters.AddWithValue("EmployeeID", book.emp.employeeID);
-                            cmdInsertBook.ExecuteNonQuery();
-                            tran.Commit();
+                            if (GetCheck(book.er.escapeRoomID,book.bookingTime,book.date)== false) {
+                                cmdInsertBook.Parameters.AddWithValue("EscapeRoomID", book.er.escapeRoomID);
+                                cmdInsertBook.Parameters.AddWithValue("BookingTime", book.bookingTime);
+                                cmdInsertBook.Parameters.AddWithValue("BDate", book.date);
+                                cmdInsertBook.Parameters.AddWithValue("AmountOfPeople", book.amountOfPeople);
+                                cmdInsertBook.Parameters.AddWithValue("UserName", book.cus.username);
+                                cmdInsertBook.Parameters.AddWithValue("EmployeeID", book.emp.employeeID);
+                                cmdInsertBook.ExecuteNonQuery();
+                                tran.Commit();
+                            }
+                            else {
+                                tran.Rollback();
+                            }
                         }
                     }
                     catch (Exception e)
@@ -320,6 +325,37 @@ namespace ProductService.DataAccessLayer {
                 }
             }
             return books;
+        }
+        public bool GetCheck(int EscID, TimeSpan BookingTime, DateTime Bdate) {
+            Booking book = new Booking();
+            DBCustomer dbcus = new DBCustomer();
+            DBEscapeRoom dber = new DBEscapeRoom();
+            DBEmployee dbemp = new DBEmployee();
+            bool found = false;
+
+            using (SqlConnection connection = new SqlConnection(_connectionString)) {
+                connection.Open();
+                using (SqlCommand cmdGetBook = connection.CreateCommand()) {
+                    cmdGetBook.CommandText = "SELECT Booking.* FROM Booking WHERE BookingTime=@BookingTime AND EscapeRoomID =@EscapeRoomID AND BDate =@BDate";
+                    cmdGetBook.Parameters.AddWithValue("@BookingTime", BookingTime);
+                    cmdGetBook.Parameters.AddWithValue("@EscapeRoomID", EscID);
+                    cmdGetBook.Parameters.AddWithValue("@BDate", Bdate);
+                    SqlDataReader reader = cmdGetBook.ExecuteReader();
+                    if (reader.Read()) {
+
+                        book.amountOfPeople = reader.GetInt32(reader.GetOrdinal("AmountOfPeople"));
+                        book.bookingTime = reader.GetTimeSpan(reader.GetOrdinal("BookingTime"));
+                        book.date = reader.GetDateTime(reader.GetOrdinal("BDate"));
+                        book.cus = dbcus.Get(reader.GetString(reader.GetOrdinal("UserName")));
+                        book.emp = dbemp.Get(reader.GetInt32(reader.GetOrdinal("EmployeeID")));
+                        book.er = dber.GetForOwner(reader.GetInt32(reader.GetOrdinal("EscapeRoomID")));
+                        book.Id = reader.GetInt32(reader.GetOrdinal("BookingID"));
+                        found = true;
+                    }
+
+                }
+            }
+            return found;
         }
     }
 }
